@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Download - Lux AI Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+    * { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; }
+    body { background: #0a0a0b; }
+    .bg-image { position: fixed; inset: 0; background-image: url('/assets/background.png'); background-size: cover; background-position: center; z-index: -1; }
+    .bg-overlay { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0.6) 0%, rgba(10,10,11,0.85) 100%); pointer-events: none; z-index: 0; }
+    main, header, footer { position: relative; z-index: 1; }
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+    .glass:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,107,0,0.3); }
+    .btn-glow { background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%); box-shadow: 0 4px 20px rgba(255,107,0,0.3); transition: all 0.3s ease; }
+    .btn-glow:hover { box-shadow: 0 6px 30px rgba(255,107,0,0.5); transform: translateY(-2px); }
+    .text-gradient { background: linear-gradient(135deg, #ff6b00 0%, #ffb347 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .download-card { transition: all 0.3s ease; }
+    .download-card:hover { transform: translateY(-8px) scale(1.02); }
+    .pulse-glow { animation: pulse-glow 2s ease-in-out infinite; }
+    @keyframes pulse-glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(255,107,0,0.3); }
+        50% { box-shadow: 0 0 40px rgba(255,107,0,0.6); }
+    }
+</style>
+</head>
+<body class="text-white antialiased min-h-screen flex flex-col overflow-x-hidden">
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-2xl border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a href="/" class="flex items-center gap-3 group">
+<img src="/assets/logo_2.png" alt="Lux" class="h-9 w-auto" />
+<span class="text-lg font-semibold tracking-tight">LUX AI STUDIO</span>
+</a>
+<nav class="hidden md:flex gap-8">
+<a href="features.html" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
+<a href="agents.html" class="text-sm text-gray-400 hover:text-white transition-colors">Agents</a>
+<a href="stack.html" class="text-sm text-gray-400 hover:text-white transition-colors">Stack</a>
+<a href="usecases.html" class="text-sm text-gray-400 hover:text-white transition-colors">Use Cases</a>
+<a href="download.html" class="text-sm text-orange-400 font-medium">Download</a>
+<a href="docs.html" class="text-sm text-gray-400 hover:text-white transition-colors">Docs</a>
+</nav>
+<button class="btn-glow px-6 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+Download
+</button>
+</div>
+</header>
+
+<main class="flex-grow pt-32 px-6">
+<div class="max-w-5xl mx-auto">
+
+<div class="text-center mb-12">
+<h1 class="text-5xl font-bold mb-4">Download <span class="text-gradient">Lux AI Studio</span></h1>
+<p class="text-xl text-gray-300 max-w-2xl mx-auto">Developed by <strong class="text-orange-400">Lux Automaton</strong>. Choose your platform. All versions include full access to Manus, Claude Code, CoWork, and Hermes.</p>
+</div>
+
+<div class="flex justify-center gap-4 mb-12">
+<span class="px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-medium flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+v2.0.4 Stable
+</span>
+</div>
+
+<!-- Download Options -->
+<div class="grid md:grid-cols-3 gap-8 mb-16">
+<!-- macOS -->
+<div class="glass rounded-3xl p-8 text-center download-card relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent"></div>
+<div class="relative">
+<div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-4xl text-white">laptop_mac</span>
+</div>
+<h2 class="text-2xl font-bold mb-2">macOS</h2>
+<p class="text-gray-400 mb-6">Apple Silicon & Intel</p>
+<ul class="text-left text-gray-400 text-sm space-y-2 mb-8">
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> Metal GPU acceleration</li>
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> Native performance</li>
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> DMG installer</li>
+</ul>
+<button class="w-full btn-glow py-4 rounded-xl font-semibold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">download</span>
+Download for Mac
+</button>
+<p class="text-xs text-gray-500 mt-4">Requires macOS 13+</p>
+</div>
+</div>
+
+<!-- Windows -->
+<div class="glass rounded-3xl p-8 text-center download-card relative overflow-hidden border-2 border-orange-500/30">
+<div class="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent"></div>
+<div class="absolute top-0 left-1/2 -translate-x-1/2 px-4 py-1 bg-orange-500 text-black text-xs font-bold rounded-b-xl">
+RECOMMENDED
+</div>
+<div class="relative">
+<div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-950 flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-4xl text-white">desktop_windows</span>
+</div>
+<h2 class="text-2xl font-bold mb-2">Windows</h2>
+<p class="text-gray-400 mb-6">Windows 11 & 10</p>
+<ul class="text-left text-gray-400 text-sm space-y-2 mb-8">
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> CUDA GPU acceleration</li>
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> DirectX 12 support</li>
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> EXE installer</li>
+</ul>
+<button class="w-full btn-glow py-4 rounded-xl font-semibold flex items-center justify-center gap-2 pulse-glow">
+<span class="material-symbols-outlined">download</span>
+Download for Windows
+</button>
+<p class="text-xs text-gray-500 mt-4">Requires Windows 11+</p>
+</div>
+</div>
+
+<!-- Linux -->
+<div class="glass rounded-3xl p-8 text-center download-card relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-orange-500/10 to-transparent"></div>
+<div class="relative">
+<div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-orange-900 to-orange-950 flex items-center justify-center border border-white/10">
+<span class="material-symbols-outlined text-4xl text-white">terminal</span>
+</div>
+<h2 class="text-2xl font-bold mb-2">Linux</h2>
+<p class="text-gray-400 mb-6">Ubuntu, Debian, Arch</p>
+<ul class="text-left text-gray-400 text-sm space-y-2 mb-8">
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> ROCm GPU acceleration</li>
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> AppImage & .deb</li>
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> CLI available</li>
+</ul>
+<button class="w-full btn-glow py-4 rounded-xl font-semibold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">download</span>
+Download for Linux
+</button>
+<p class="text-xs text-gray-500 mt-4">Multiple formats available</p>
+</div>
+</div>
+</div>
+
+<!-- What's Included -->
+<div class="glass rounded-3xl p-10 mb-16">
+<h2 class="text-3xl font-bold mb-8 text-center">What's Included</h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-400">hub</span>
+</span>
+Core Applications
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-orange-400 font-bold">Manus</span> — Autonomous research agent</li>
+<li class="flex items-center gap-3"><span class="text-green-400 font-bold">Claude Code</span> — Private coding copilot</li>
+<li class="flex items-center gap-3"><span class="text-blue-400 font-bold">CoWork</span> — Collaborative workspace</li>
+<li class="flex items-center gap-3"><span class="text-purple-400 font-bold">Hermes</span> — Agentic chat interface</li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-400">psychology</span>
+</span>
+AI Capabilities
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-yellow-400 font-bold">Lux Mythos</span> — Advanced reasoning engine</li>
+<li class="flex items-center gap-3"><span class="text-green-400 font-bold">Gemma 4</span> — Local inference</li>
+<li class="flex items-center gap-3"><span class="text-blue-400 font-bold">Ollama</span> — Model management</li>
+<li class="flex items-center gap-3"><span class="text-purple-400 font-bold">Opencode</span> — API orchestration</li>
+</ul>
+</div>
+</div>
+</div>
+
+<!-- System Requirements -->
+<div class="glass rounded-3xl p-10 mb-16">
+<h2 class="text-3xl font-bold mb-6 text-center">System Requirements</h2>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="text-center">
+<div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-orange-400">memory</span>
+</div>
+<h3 class="font-semibold mb-2">Memory</h3>
+<p class="text-sm text-gray-400">16GB minimum<br/>64GB recommended</p>
+</div>
+<div class="text-center">
+<div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-green-400">storage</span>
+</div>
+<h3 class="font-semibold mb-2">Storage</h3>
+<p class="text-sm text-gray-400">20GB free space<br/>SSD recommended</p>
+</div>
+<div class="text-center">
+<div class="w-16 h-16 mx-auto mb-4 rounded-2xl bg-white/5 flex items-center justify-center">
+<span class="material-symbols-outlined text-3xl text-blue-400">videocam</span>
+</div>
+<h3 class="font-semibold mb-2">GPU</h3>
+<p class="text-sm text-gray-400">Apple Silicon<br/>NVIDIA RTX series<br/>AMD ROCm</p>
+</div>
+</div>
+</div>
+
+<!-- FAQ -->
+<div class="glass rounded-3xl p-10">
+<h2 class="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
+<div class="space-y-4 max-w-2xl mx-auto">
+<div class="bg-black/30 rounded-xl p-5">
+<h3 class="font-semibold mb-2">Is Lux AI Studio really free?</h3>
+<p class="text-gray-400 text-sm">Yes, Lux AI Studio is free to download and use. All features including local inference, agent management, and workflow automation are included at no cost.</p>
+</div>
+<div class="bg-black/30 rounded-xl p-5">
+<h3 class="font-semibold mb-2">Do I need an internet connection?</h3>
+<p class="text-gray-400 text-sm">No. All AI processing happens locally on your machine. You can run the entire stack offline with no internet required.</p>
+</div>
+<div class="bg-black/30 rounded-xl p-5">
+<h3 class="font-semibold mb-2">Which AI models can I use?</h3>
+<p class="text-gray-400 text-sm">Gemma 4, Qwen 2.5, Llama 3, and any other Ollama-compatible model. Download additional models through the built-in model manager.</p>
+</div>
+<div class="bg-black/30 rounded-xl p-5">
+<h3 class="font-semibold mb-2">How do I update to the latest version?</h3>
+<p class="text-gray-400 text-sm">The app will automatically check for updates. You can also manually check for updates from the settings menu.</p>
+</div>
+</div>
+</div>
+
+</div>
+</main>
+
+<footer class="border-t border-white/10 py-12 px-6 mt-10">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<img src="/assets/logo_2.png" alt="Lux" class="h-8 w-auto" />
+<span class="font-semibold">LUX AI STUDIO</span>
+</div>
+<div class="text-center md:text-right">
+<p class="text-sm text-gray-500">Developed by <span class="text-orange-400 font-semibold">Lux Automaton</span></p>
+</div>
+<div class="flex gap-6 text-sm text-gray-500">
+<a href="docs.html" class="hover:text-white transition-colors">Documentation</a>
+<a href="#" class="hover:text-white transition-colors">GitHub</a>
+</div>
+<p class="text-sm text-gray-600">© 2024 Lux AI Studio</p>
+</div>
+</footer>
+</body>
+</html>

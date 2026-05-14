@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Features - Lux AI Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+    * { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; }
+    body { background: #0a0a0b; }
+    .bg-image { position: fixed; inset: 0; background-image: url('/assets/background.png'); background-size: cover; background-position: center; z-index: -1; }
+    .bg-overlay { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0.6) 0%, rgba(10,10,11,0.85) 100%); pointer-events: none; z-index: 0; }
+    main, header, footer { position: relative; z-index: 1; }
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+    .glass:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,107,0,0.2); }
+    .btn-glow { background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%); box-shadow: 0 4px 20px rgba(255,107,0,0.3); transition: all 0.3s ease; }
+    .btn-glow:hover { box-shadow: 0 6px 30px rgba(255,107,0,0.5); transform: translateY(-2px); }
+    .text-gradient { background: linear-gradient(135deg, #ff6b00 0%, #ffb347 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .card-3d { transform: perspective(1000px); transition: all 0.4s ease; }
+    .card-3d:hover { transform: translateY(-8px) rotateX(2deg); }
+</style>
+</head>
+<body class="text-white antialiased min-h-screen flex flex-col overflow-x-hidden">
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-2xl border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a href="/" class="flex items-center gap-3 group">
+<img src="/assets/logo_2.png" alt="Lux" class="h-9 w-auto" />
+<span class="text-lg font-semibold tracking-tight">LUX AI STUDIO</span>
+</a>
+<nav class="hidden md:flex gap-8">
+<a href="features.html" class="text-sm text-orange-400 font-medium">Features</a>
+<a href="agents.html" class="text-sm text-gray-400 hover:text-white transition-colors">Agents</a>
+<a href="stack.html" class="text-sm text-gray-400 hover:text-white transition-colors">Stack</a>
+<a href="usecases.html" class="text-sm text-gray-400 hover:text-white transition-colors">Use Cases</a>
+<a href="download.html" class="text-sm text-gray-400 hover:text-white transition-colors">Download</a>
+<a href="docs.html" class="text-sm text-gray-400 hover:text-white transition-colors">Docs</a>
+</nav>
+<button class="btn-glow px-6 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+Download
+</button>
+</div>
+</header>
+
+<main class="flex-grow pt-32 px-6">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-16">
+<h1 class="text-5xl font-bold mb-4">Powerful <span class="text-gradient">Features</span></h1>
+<p class="text-xl text-gray-300 max-w-2xl mx-auto">Developed by <strong class="text-orange-400">Lux Automaton</strong>. Everything you need to build, manage, and scale AI workflows locally with 100% privacy.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-20">
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-orange-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-orange-400">hub</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">Unified Agent Control</h3>
+<p class="text-gray-400">Manage Manus, Claude Code, Hermes, and CoWork from one interface. No switching between apps.</p>
+</div>
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-green-400">psychology</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">Local Memory & Context</h3>
+<p class="text-gray-400">Agents remember your projects, preferences, and history. No cloud dependency, full privacy.</p>
+</div>
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-blue-400">account_tree</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">Workflow Automation</h3>
+<p class="text-gray-400">Build reusable playbooks, automate repetitive tasks, and chain agents together.</p>
+</div>
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-purple-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-purple-400">security</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">100% Local Privacy</h3>
+<p class="text-gray-400">Your code, prompts, and data never leave your machine. Enterprise-grade security.</p>
+</div>
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-yellow-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-yellow-400">speed</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">GPU Acceleration</h3>
+<p class="text-gray-400">Leverage Metal (macOS), CUDA (Windows), or ROCm (Linux) for near-instant responses.</p>
+</div>
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-cyan-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-cyan-400">integration_instructions</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">Open API Compatibility</h3>
+<p class="text-gray-400">Opencode mimics OpenAI/Anthropic APIs. Use cloud tools locally without modification.</p>
+</div>
+</div>
+
+<div class="glass rounded-3xl p-10 mb-20">
+<h2 class="text-3xl font-bold mb-6 text-center">Super Agent Terminal</h2>
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-orange-400">terminal</span>
+</span>
+Bidirectional Workspace
+</h3>
+<p class="text-gray-400 mb-4">Watch the AI execute commands in real-time. Toggle terminal view to maximize chat focus. Full safety guardrails included.</p>
+<ul class="space-y-2 text-gray-300">
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> Agent control with real-time execution</li>
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> Collapsible interface</li>
+<li class="flex items-center gap-2"><span class="text-green-400">✓</span> Local command execution</li>
+</ul>
+</div>
+<div class="bg-black/40 rounded-2xl p-6 font-mono text-sm">
+<p class="text-gray-400">&gt; lux agent start --super</p>
+<p class="text-gray-500 mt-1">[INFO] Initializing Super Agent...</p>
+<p class="text-gray-500">[INFO] Loading context from memory...</p>
+<p class="text-green-400 mt-2">✓ Context loaded (2.3s)</p>
+<p class="text-gray-500 mt-1">[INFO] Scanning project structure...</p>
+<p class="text-green-400">✓ Project analyzed</p>
+<p class="mt-2 text-orange-400">Super Agent ready. Enter command:</p>
+</div>
+</div>
+</div>
+
+<div class="glass rounded-3xl p-10">
+<h2 class="text-3xl font-bold mb-6 text-center">Zero-Friction Authentication</h2>
+<div class="max-w-3xl mx-auto text-center">
+<p class="text-gray-300 text-lg mb-6">Most agentic tools require cloud login and API billing. Lux bypasses authentication entirely. Use Claude Code without login prompts by setting:</p>
+<div class="bg-black/40 rounded-xl p-4 font-mono text-sm text-center">
+<span class="text-green-400">CLAUDE_CODE_USE_OPENAI=1</span> → local opencode instance
+</div>
+<p class="text-gray-400 mt-4">Get the power of the Claude CLI without the cloud dependency.</p>
+</div>
+</div>
+</div>
+</main>
+
+<footer class="border-t border-white/10 py-12 px-6 mt-20">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<img src="/assets/logo_2.png" alt="Lux" class="h-8 w-auto" />
+<span class="font-semibold">LUX AI STUDIO</span>
+</div>
+<div class="text-center md:text-right">
+<p class="text-sm text-gray-500">Developed by <span class="text-orange-400 font-semibold">Lux Automaton</span></p>
+</div>
+<div class="flex gap-6 text-sm text-gray-500">
+<a href="docs.html" class="hover:text-white transition-colors">Documentation</a>
+<a href="#" class="hover:text-white transition-colors">GitHub</a>
+</div>
+<p class="text-sm text-gray-600">© 2024 Lux AI Studio</p>
+</div>
+</footer>
+</body>
+</html>

@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Discovery - Lux AI Studio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="icon" type="image/png" href="/static/brand/ollama-logo.png">
+    <style>
+        :root {
+            --bg: #030303;
+            --surface: #0a0a0a;
+            --surface-2: #121212;
+            --line: #1f1f1f;
+            --line-2: #2a2a2a;
+            --text: #ffffff;
+            --muted: #a3a3a3;
+            --soft: #d1d5db;
+            --ok: #10b981;
+            --primary: #f97316;
+            --primary-strong: #ea580c;
+            --shadow: 0 12px 40px rgba(0,0,0,0.6);
+            --font: Inter, -apple-system, BlinkMacSystemFont, sans-serif;
+            --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font);
+            color: var(--text);
+            background: radial-gradient(circle at top right, rgba(249, 115, 22, 0.08), transparent 40%),
+                        radial-gradient(circle at bottom left, rgba(249, 115, 22, 0.05), transparent 40%),
+                        var(--bg);
+            min-height: 100vh;
+            padding: 24px;
+        }
+
+        .shell { max-width: 1200px; margin: 0 auto; }
+
+        header {
+            border: 1px solid var(--line);
+            background: rgba(10,10,10,0.7);
+            border-radius: 18px;
+            padding: 24px 28px;
+            backdrop-filter: blur(12px);
+            box-shadow: var(--shadow);
+            margin-bottom: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .back-btn {
+            background: var(--surface-2);
+            border: 1px solid var(--line-2);
+            color: var(--text);
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .back-btn:hover { border-color: var(--primary); color: var(--primary); transform: translateY(-1px); }
+
+        h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.02em; }
+        .subtitle { color: var(--muted); font-size: 0.95rem; margin-top: 4px; }
+
+        .search-bar {
+            background: rgba(0,0,0,0.5);
+            border: 1px solid var(--line-2);
+            padding: 12px 18px;
+            border-radius: 12px;
+            color: var(--text);
+            width: 300px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .search-bar:focus { outline: none; border-color: var(--primary); background: rgba(0,0,0,0.8); }
+
+        .category-block {
+            margin-bottom: 40px;
+        }
+
+        .category-block h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .category-block h2::before {
+            content: ''; width: 4px; height: 18px; background: var(--primary); border-radius: 2px;
+        }
+
+        .category-desc {
+            color: var(--muted);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 20px;
+        }
+
+        .model-card {
+            border: 1px solid var(--line);
+            background: linear-gradient(145deg, rgba(16,16,16,0.95) 0%, rgba(10,10,10,0.98) 100%);
+            border-radius: 16px;
+            padding: 22px;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .model-card:hover {
+            border-color: rgba(249, 115, 22, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 15px rgba(249, 115, 22, 0.05);
+        }
+
+        .model-card.lux-ai::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 3px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+        }
+
+        .model-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+
+        .model-name {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text);
+            font-family: var(--mono);
+        }
+
+        .model-badge {
+            background: rgba(249, 115, 22, 0.15);
+            color: var(--primary);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .model-desc {
+            color: var(--soft);
+            font-size: 0.88rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        .model-meta {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .meta-pill {
+            background: var(--surface-2);
+            border: 1px solid var(--line-2);
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            color: var(--muted);
+            font-family: var(--mono);
+        }
+
+        .action-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-pull {
+            flex: 1;
+            background: var(--primary);
+            color: #000;
+            border: none;
+            padding: 12px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-pull:hover {
+            background: var(--primary-strong);
+            transform: translateY(-1px);
+        }
+        
+        .btn-pull.pulled {
+            background: var(--surface-2);
+            border: 1px solid var(--line-2);
+            color: var(--text);
+        }
+
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <header>
+            <div class="header-left">
+                <a href="/dashboard" class="back-btn">← Control Center</a>
+                <div>
+                    <h1>Model Discovery</h1>
+                    <div class="subtitle">Curated local models optimized for Lux AI Studio, developed by Lux Automaton. Pull directly into Ollama.</div>
+                </div>
+            </div>
+            <input type="text" class="search-bar" placeholder="Search models (e.g., Llama 3, Qwen)...">
+        </header>
+
+        <div class="category-block">
+            <h2>LUX AI Official Core</h2>
+            <p class="category-desc">The primary engines designed for the LUX AI Smart Router. These power your dynamic hardware paths.</p>
+            <div class="grid">
+                <div class="model-card lux-ai">
+                    <div class="model-header">
+                        <div class="model-name">qwen3.6:27b</div>
+                        <div class="model-badge">GPU PATH</div>
+                    </div>
+                    <p class="model-desc">The hyper-optimized 27 Billion parameter engine for Metal and CUDA devices. Ridiculously fast reasoning, brilliant coding capabilities, and enormous context windows.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: ~15GB</span>
+                        <span class="meta-pill">Context: 32K</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('qwen3.6:27b')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+
+                <div class="model-card lux-ai">
+                    <div class="model-header">
+                        <div class="model-name">qwen3.6:35b-a3b</div>
+                        <div class="model-badge">CPU PATH</div>
+                    </div>
+                    <p class="model-desc">The lean and capable 35 Billion parameter mixture-of-experts model optimized for Apple Silicon CPU and standard desktops. High reasoning without the heat.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: ~18GB</span>
+                        <span class="meta-pill">Context: 16K</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('qwen3.6:35b-a3b')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-block">
+            <h2>Daily Drivers</h2>
+            <p class="category-desc">Fast, capable models perfectly suited for general agent tasks, research, and CoWork assistance.</p>
+            <div class="grid">
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-name">llama3:8b</div>
+                        <div class="model-badge">POPULAR</div>
+                    </div>
+                    <p class="model-desc">Meta's highly capable 8B model. Excellent instruction following and reasoning. The gold standard for local daily usage.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: 4.7GB</span>
+                        <span class="meta-pill">Speed: High</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('llama3')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-name">qwen2.5:7b</div>
+                    </div>
+                    <p class="model-desc">Alibaba's extremely competitive 7B model. Often beats Llama 3 in coding benchmarks and multilingual tasks.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: 4.4GB</span>
+                        <span class="meta-pill">Speed: High</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('qwen2.5:7b')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-name">mistral:7b</div>
+                    </div>
+                    <p class="model-desc">The classic fast and uncensored model. Great for creative writing and raw completions.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: 4.1GB</span>
+                        <span class="meta-pill">Speed: Very High</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('mistral')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-block">
+            <h2>Heavy Duty & Coding</h2>
+            <p class="category-desc">Large models intended for complex coding, reasoning, and logic. Requires 16GB+ RAM.</p>
+            <div class="grid">
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-name">llama3.1:70b</div>
+                    </div>
+                    <p class="model-desc">Massive 70B parameter model. Approaches GPT-4 levels of reasoning. Extremely heavy, requires high-end hardware.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: 40GB</span>
+                        <span class="meta-pill">Context: 128K</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('llama3.1:70b')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-name">deepseek-coder-v2</div>
+                        <div class="model-badge">CODING</div>
+                    </div>
+                    <p class="model-desc">An absolutely brilliant Mixture-of-Experts coding model. Phenomenal for Lux CLI and Hermes terminal execution.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: 16GB</span>
+                        <span class="meta-pill">Context: 32K</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('deepseek-coder-v2')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-block">
+            <h2>Speed & Edge Devices</h2>
+            <p class="category-desc">Tiny models designed to run instantly on minimal hardware.</p>
+            <div class="grid">
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-name">phi3:mini</div>
+                    </div>
+                    <p class="model-desc">Microsoft's tiny 3.8B model. Astounding reasoning capabilities for its size. Perfect for older laptops.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: 2.3GB</span>
+                        <span class="meta-pill">Speed: Ultra</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('phi3')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+                
+                <div class="model-card">
+                    <div class="model-header">
+                        <div class="model-name">gemma2:2b</div>
+                    </div>
+                    <p class="model-desc">Google's open weights model. Extremely lightweight, very capable instruction following.</p>
+                    <div class="model-meta">
+                        <span class="meta-pill">Size: 1.6GB</span>
+                        <span class="meta-pill">Speed: Ultra</span>
+                    </div>
+                    <div class="action-row">
+                        <button class="btn-pull" onclick="pullModel('gemma2:2b')">⬇️ Pull into Ollama</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        async function pullModel(modelName) {
+            try {
+                const res = await fetch('/api/models/pull', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ model: modelName })
+                });
+                
+                const data = await res.json();
+                if (data.status === 'ok') {
+                    alert(`Ollama is now pulling ${modelName} in a new terminal window!\n\nYou can track the progress there. Once finished, the terminal will stay open so you can test it.`);
+                } else {
+                    alert(`Failed to trigger pull: ${data.message}`);
+                }
+            } catch (err) {
+                alert(`Network error: ${err.message}`);
+            }
+        }
+    </script>
+</body>
+</html>

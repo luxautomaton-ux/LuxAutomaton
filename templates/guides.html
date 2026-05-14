@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lux Playbooks & Guides</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="icon" type="image/png" href="/static/brand/logo.png">
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #111111;
+            --surface-2: #171717;
+            --line: #2a2a2a;
+            --text: #f5f5f5;
+            --muted: #a3a3a3;
+            --primary: #f97316;
+            --shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            background: var(--bg);
+            color: var(--text);
+            font-family: Inter, sans-serif;
+            padding: 40px 20px;
+        }
+
+        .shell {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 40px;
+            border-bottom: 1px solid var(--line);
+            padding-bottom: 20px;
+        }
+
+        .title-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 999px;
+            padding: 7px 13px;
+            margin-bottom: 14px;
+        }
+
+        .title-row img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+            border-radius: 6px;
+            border: 1px solid var(--line);
+            background: #0f0f0f;
+            padding: 2px;
+        }
+
+        .title-row span {
+            color: var(--muted);
+            font-size: 0.76rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            letter-spacing: -0.02em;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--muted);
+            font-size: 1.1rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .guide-card {
+            background: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.2s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+            display: block;
+        }
+
+        .guide-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-4px);
+            background: var(--surface-2);
+        }
+
+        .icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: #171717;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .icon img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border-radius: 8px;
+            padding: 4px;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            margin-bottom: 10px;
+        }
+
+        .guide-card p {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.5;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 20px;
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .back-link:hover { color: var(--text); }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <a href="/dashboard" class="back-link">← Back to Dashboard</a>
+        <header>
+            <div class="title-row">
+                <img src="/static/brand/logo.png" onerror="this.src='/static/brand/lux-ai.png'" alt="Lux AI Studio logo">
+                <span>Lux AI Studio</span>
+            </div>
+            <h1>Playbooks & Guides</h1>
+            <p>Master your Lux AI Studio environment with professional setup templates and efficiency guides from Lux Automaton.</p>
+        </header>
+
+        <div class="grid">
+            <a href="#" class="guide-card" onclick="alert('Open COMPREHENSIVE_AUTOMATON_GUIDE.md in your editor for the full view.')">
+                <div class="icon"><img src="/static/brand/logo.png" onerror="this.src='/static/brand/lux-ai.png'" alt="Ultimate Efficiency Guide"></div>
+                <div class="tag">Essential</div>
+                <h3>Ultimate Efficiency Guide</h3>
+                <p>Model comparisons, Hybrid VPS setup, and one-button recovery procedures.</p>
+            </a>
+
+            <a href="#" class="guide-card" onclick="alert('Open LuxCoWork/FULL_GUIDE_USE_CASES.md for deep dive.')">
+                <div class="icon"><img src="/static/brand/lux-cowork-logo.png" onerror="this.src='/static/brand/logo.png'" alt="Professional Use Cases"></div>
+                <div class="tag">Workflows</div>
+                <h3>Professional Use Cases</h3>
+                <p>Deep dive into Coding, Business automation, and Research workflows.</p>
+            </a>
+
+            <a href="#" class="guide-card" onclick="alert('Open CLAUDE.md for technical details.')">
+                <div class="icon"><img src="/static/brand/lux-cli-logo.png" onerror="this.src='/static/brand/lux-claude-logo.png'" alt="CLI and Terminal Guide"></div>
+                <div class="tag">Technical</div>
+                <h3>CLI & Terminal Guide</h3>
+                <p>Advanced commands for Lux Claude Code, Manus, and Hermes terminal agents.</p>
+            </a>
+
+            <a href="#" class="guide-card" onclick="window.location.href='/system-scanner'">
+                <div class="icon"><img src="/static/brand/hermes-logo.png?v=hermes-agent" onerror="this.src='/static/brand/logo.png'" alt="System Scanner"></div>
+                <div class="tag">Diagnostics</div>
+                <h3>System Scanner</h3>
+                <p>Diagnose connectivity, check model health, and fix environment issues.</p>
+            </a>
+        </div>
+    </div>
+</body>
+</html>

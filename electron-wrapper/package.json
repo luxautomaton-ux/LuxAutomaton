@@ -1,0 +1,63 @@
+{
+  "name": "lux-ai-studio",
+  "version": "1.0.0",
+  "description": "Lux AI Studio - developed by Lux Automaton",
+  "productName": "Lux AI Studio",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build:mac": "electron-builder --mac",
+    "build:win": "electron-builder --win",
+    "build:linux": "electron-builder --linux"
+  },
+  "author": "Lux Automaton Team",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "^30.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.luxaistudio.app",
+    "productName": "Lux AI Studio",
+    "mac": {
+      "category": "public.app-category.developer-tools",
+      "target": "dmg",
+      "icon": "build/icon.icns"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "build/icon.ico"
+    },
+    "linux": {
+      "target": "AppImage",
+      "category": "Development",
+      "icon": "build/icon.png"
+    },
+    "extraResources": [
+      {
+        "from": "../",
+        "to": "LuxAutomaton",
+        "filter": [
+          "hub.py",
+          "database.py",
+          "lux_hermes_use_cases.py",
+          "backup.py",
+          "requirements.txt",
+          "templates/**/*",
+          "static/**/*",
+          "Manus/**/*",
+          "Hermes/**/*",
+          "claudecodeui/dist-server/**/*",
+          "LuxCoWork/**/*",
+          "openclaude/**/*",
+          "LuxTube/**/*",
+          "Open-Generative-AI/**/*",
+          "hyperframes/**/*",
+          "tools/**/*",
+          "Skills-Install.sh",
+          "LuxAutomaton-Install.sh"
+        ]
+      }
+    ]
+  }
+}

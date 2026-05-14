@@ -1,0 +1,44 @@
+# Build / Dependencies
+node_modules/
+dist/
+build/
+npm-global/
+.claude/
+.luxcli/
+*.luxvault
+
+# Large Application Files
+"Lux Automaton.app"/
+Lux-Automaton-Installer.dmg
+electron-wrapper/dist/
+LuxAutomaton-Electron/dist/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.env
+.env.local
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Media (Large)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+
+# Temporary
+*.log
+logs/
+tmp/
+backups/
+scratch/
+.tempmediaStorage/

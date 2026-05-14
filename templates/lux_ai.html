@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUX Link - Mesh Networking</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><link rel="icon" type="image/png" href="/static/brand/lux-ai.png">
+    <style>
+        :root {
+            --bg: #050505;
+            --surface: #111111;
+            --surface-2: #171717;
+            --line: #2a2a2a;
+            --text: #f5f5f5;
+            --muted: #a3a3a3;
+            --primary: #f97316;
+            --primary-strong: #ea580c;
+            --green: #22c55e;
+            --blue: #3b82f6;
+            --purple: #a855f7;
+            --shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            min-height: 100vh;
+            background:
+                radial-gradient(circle at 15% 10%, rgba(249, 115, 22, 0.2), transparent 28%),
+                radial-gradient(circle at 85% 90%, rgba(249, 115, 22, 0.14), transparent 30%),
+                var(--bg);
+            color: var(--text);
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            padding: 24px;
+        }
+
+        .shell {
+            width: min(1180px, 100%);
+            border: 1px solid var(--line);
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            background: rgba(9, 9, 9, 0.86);
+            backdrop-filter: blur(8px);
+        }
+
+        .hero {
+            padding: 44px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .brand img {
+            width: 42px;
+            height: 42px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            object-fit: cover;
+        }
+
+        .brand span {
+            font-size: 0.82rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        h1 {
+            font-size: clamp(2rem, 4vw, 3.2rem);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 14px;
+        }
+
+        h1 em {
+            font-style: normal;
+            color: var(--primary);
+        }
+
+        .copy {
+            color: #d4d4d4;
+            line-height: 1.6;
+            font-size: 1.1rem;
+            max-width: 80ch;
+            margin-bottom: 24px;
+        }
+
+        .highlight {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+            padding: 30px 44px;
+        }
+
+        .card {
+            border: 1px solid var(--line);
+            border-radius: 14px;
+            background: var(--surface-2);
+            padding: 24px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; height: 2px;
+            background: linear-gradient(90deg, transparent 0%, var(--primary) 50%, transparent 100%);
+            opacity: 0.5;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 12px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+        .card ul {
+            margin-top: 12px;
+            padding-left: 20px;
+            color: var(--muted);
+            line-height: 1.8;
+        }
+
+        .btn {
+            display: inline-block;
+            border: 1px solid var(--line);
+            background: var(--surface);
+            color: var(--text);
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: 160ms ease;
+            cursor: pointer;
+            margin-top: 16px;
+        }
+
+        .btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-1px);
+        }
+
+        .btn.primary {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #1c0f04;
+        }
+
+        .btn.primary:hover {
+            background: var(--primary-strong);
+        }
+
+        .code-block {
+            background: #0a0a0a;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 16px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.85rem;
+            color: var(--green);
+            overflow-x: auto;
+            margin: 12px 0;
+            line-height: 1.6;
+        }
+
+        .code-block .comment { color: #6b7280; }
+        .code-block .cmd { color: var(--primary); }
+        .code-block .arg { color: var(--blue); }
+
+        .status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .status.active {
+            background: rgba(34, 197, 94, 0.15);
+            color: var(--green);
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .setup-steps {
+            counter-reset: step;
+        }
+
+        .setup-step {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 20px;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: #1c0f04;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--text);
+            margin-bottom: 4px;
+        }
+
+        .step-content p {
+            font-size: 0.9rem;
+            color: var(--muted);
+        }
+
+        .connection-info {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 16px;
+        }
+
+        .connection-info h4 {
+            color: var(--blue);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        @media (max-width: 980px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+
+        @media (max-width: 620px) {
+            .shell { border-radius: 16px; }
+            .hero, .grid { padding: 22px; }
+        }
+    </style>
+</head>
+<body>
+    <main class="shell">
+        <section class="hero">
+            <div>
+                <div class="brand">
+                    <img src="/static/brand/lux-ai.png" onerror="this.src='/static/brand/logo.png'" alt="Lux AI">
+                    <span>LUX Link Mesh Networking</span>
+                </div>
+                <h1><em>Your Own Private AI Network</em></h1>
+                <p class="copy">
+                    Connect to your powerful machines at home, in the office, or in the cloud. 
+                    Run AI models remotely over a secure, end-to-end encrypted connection. 
+                    <span class="highlight">llama.cpp is built right in.</span>
+                </p>
+                <div class="status active">
+                    <span class="status-dot"></span>
+                    Mesh Network Active
+                </div>
+                <a class="btn primary" href="/dashboard">← Back to Control Center</a>
+            </div>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <h3>⚡ GPU Path — Qwen3.6 27B</h3>
+                <p>When Metal (Apple Silicon) or NVIDIA GPU is detected, requests route automatically to the blazing fast Qwen3.6 27B model. Maximum throughput for complex coding and agent tasks.</p>
+                <ul>
+                    <li>Metal acceleration on M1/M2/M3/M4</li>
+                    <li>CUDA support on NVIDIA GPUs</li>
+                    <li>~30 tokens/second on M4 Max</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <h3>🔋 CPU Path — Qwen3.6 35B A3B</h3>
+                <p>MacBook Air or standard PC? Seamlessly fall back to Qwen3.6 35B A3B. Lean and efficient, desktop-class reasoning without heating your machine.</p>
+                <ul>
+                    <li>Apple Silicon optimized</li>
+                    <li>AVX2/AVX512 support</li>
+                    <li>~8 tokens/second on M3 Air</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <h3>☁️ VPS / Cloud Path</h3>
+                <p>Host models on a cheap VPS or Oracle Cloud Free Tier. Keep your data local while cloud does the heavy lifting.</p>
+                <ul>
+                    <li>Oracle Cloud Free Tier ready</li>
+                    <li>$5 VPS compatible</li>
+                    <li>End-to-end encryption</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <h3>🔒 Zero-Trust Security</h3>
+                <p>Every request is encrypted. No data leaves your mesh without explicit permission.</p>
+                <ul>
+                    <li>WireGuard VPN mesh</li>
+                    <li>Certificate-based auth</li>
+                    <li>Air-gapped operation</li>
+                </ul>
+            </article>
+        </section>
+
+        <section class="grid">
+            <article class="card full-width">
+                <h3>🚀 Your Setup — Connect from Anywhere</h3>
+                
+                <div class="connection-info">
+                    <h4>📡 Connection Details</h4>
+                    <div class="code-block">
+                        <span class="comment"># Your local machine (this server)</span><br>
+                        <span class="cmd">Hub:</span> <span class="arg">http://localhost:1337</span><br>
+                        <span class="cmd">Hermes:</span> <span class="arg">http://localhost:8787</span><br><br>
+                        <span class="comment"># Connect remotely using your IP</span><br>
+                        <span class="cmd">Hub Remote:</span> <span class="arg">http://YOUR_IP:1337</span><br>
+                        <span class="cmd">Hermes Remote:</span> <span class="arg">http://YOUR_IP:8787</span>
+                    </div>
+                </div>
+
+                <h4 style="margin-top: 24px; margin-bottom: 16px;">⚙️ How to Connect from Another Device</h4>
+                
+                <div class="setup-steps">
+                    <div class="setup-step">
+                        <div class="step-num">1</div>
+                        <div class="step-content">
+                            <h4>Find Your Local IP Address</h4>
+                            <p>Run <code style="color:var(--primary)">ifconfig</code> (macOS) or <code style="color:var(--primary)">ip addr</code> (Linux) to get your local IP (e.g., 192.168.1.100)</p>
+                        </div>
+                    </div>
+
+                    <div class="setup-step">
+                        <div class="step-num">2</div>
+                        <div class="step-content">
+                            <h4>Ensure Hub is Running</h4>
+                            <p>Hub should be running on port 1337. Check: <code style="color:var(--primary)">lsof -i :1337</code></p>
+                        </div>
+                    </div>
+
+                    <div class="setup-step">
+                        <div class="step-num">3</div>
+                        <div class="step-content">
+                            <h4>Connect from Another Device</h4>
+                            <p>In your client tools, point to your IP:</p>
+                            <div class="code-block">
+<span class="comment"># For Ollama-compatible tools</span>
+<span class="cmd">OLLAMA_HOST=</span><span class="arg">http://192.168.1.100:11434</span><br><br>
+<span class="comment"># For OpenAI-compatible tools (like Claude Code)</span>
+<span class="cmd">OPENAI_BASE_URL=</span><span class="arg">http://192.168.1.100:1337/v1</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="setup-step">
+                        <div class="step-num">4</div>
+                        <div class="step-content">
+                            <h4>Access Hermes Remotely</h4>
+                            <p>Open in browser: <code style="color:var(--primary)">http://192.168.1.100:8787</code></p>
+                        </div>
+                    </div>
+
+                    <div class="setup-step">
+                        <div class="step-num">5</div>
+                        <div class="step-content">
+                            <h4>For Outside Your Network (Port Forwarding)</h4>
+                            <p>Router settings → Port Forward → 1337 → Your machine's local IP</p>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <article class="card full-width">
+                <h3>☁️ VPS Setup — Run Models on Cloud</h3>
+                <p>Host llama.cpp on a VPS and connect to it from your local machine.</p>
+
+                <h4 style="margin-top: 20px; margin-bottom: 12px;">VPS Server Setup (Ubuntu 22.04)</h4>
+                
+                <div class="code-block">
+<span class="comment"># 1. Install llama.cpp server</span>
+<span class="cmd">curl -fsSL https://ollama.com/install.sh | sh</span><br><br>
+<span class="comment"># 2. Pull your model</span>
+<span class="cmd">ollama pull qwen2.5:32b</span><br><br>
+<span class="comment"># 3. Start server on all interfaces</span>
+<span class="cmd">ollama serve --host 0.0.0.0</span>
+                </div>
+
+                <h4 style="margin-top: 20px; margin-bottom: 12px;">Connect from Local Machine</h4>
+                
+                <div class="code-block">
+<span class="comment"># Point your local tools to VPS</span>
+<span class="cmd">OLLAMA_HOST=</span><span class="arg">http://YOUR_VPS_IP:11434</span><br><br>
+<span class="comment"># Or use Hub's proxy to route through VPS</span>
+<span class="cmd">export OPENAI_BASE_URL="http://localhost:1337/v1"</span><br>
+<span class="comment"># Then in your .env, configure the upstream</span>
+                </div>
+
+                <h4 style="margin-top: 20px; margin-bottom: 12px;">Security — Use SSH Tunnel (Recommended)</h4>
+                
+                <div class="code-block">
+<span class="comment"># Create secure tunnel from local to VPS</span>
+<span class="cmd">ssh -N -L 11434:localhost:11434 user@your-vps-ip</span><br><br>
+<span class="comment"># Then use localhost:11434 as if VPS was local</span>
+<span class="cmd">OLLAMA_HOST=</span><span class="arg">http://localhost:11434</span>
+                </div>
+            </article>
+        </section>
+
+        <section class="grid">
+            <article class="card">
+                <h3>🎯 Use Cases</h3>
+                <ul>
+                    <li>Run 70B model on desktop, access from laptop</li>
+                    <li>Use office GPU while working from home</li>
+                    <li>Access VPS-hosted models securely</li>
+                    <li>Create backup connection for emergencies</li>
+                </ul>
+            </article>
+
+            <article class="card">
+                <h3>💡 Quick Tips</h3>
+                <ul>
+                    <li>Use Static IP on your network router</li>
+                    <li>Set up DDNS for outside-home access</li>
+                    <li>Configure firewall rules for ports 1337, 8787, 11434</li>
+                    <li>Use VPN (WireGuard) for maximum security</li>
+                </ul>
+            </article>
+        </section>
+    </main>
+</body>
+</html>

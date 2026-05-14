@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Use Cases - Lux AI Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+    * { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; }
+    body { background: #0a0a0b; }
+    .bg-image { position: fixed; inset: 0; background-image: url('/assets/background.png'); background-size: cover; background-position: center; z-index: -1; }
+    .bg-overlay { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0.6) 0%, rgba(10,10,11,0.85) 100%); pointer-events: none; z-index: 0; }
+    main, header, footer { position: relative; z-index: 1; }
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+    .glass:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,107,0,0.2); }
+    .btn-glow { background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%); box-shadow: 0 4px 20px rgba(255,107,0,0.3); transition: all 0.3s ease; }
+    .btn-glow:hover { box-shadow: 0 6px 30px rgba(255,107,0,0.5); transform: translateY(-2px); }
+    .text-gradient { background: linear-gradient(135deg, #ff6b00 0%, #ffb347 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .use-case-card { transition: all 0.3s ease; }
+    .use-case-card:hover { transform: translateY(-4px); }
+    .category-nav { position: sticky; top: 80px; z-index: 40; background: rgba(10,10,11,0.9); backdrop-filter: blur(10px); padding: 1rem 0; }
+</style>
+</head>
+<body class="text-white antialiased min-h-screen flex flex-col overflow-x-hidden">
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-2xl border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a href="/" class="flex items-center gap-3 group">
+<img src="/assets/logo_2.png" alt="Lux" class="h-9 w-auto" />
+<span class="text-lg font-semibold tracking-tight">LUX AI STUDIO</span>
+</a>
+<nav class="hidden md:flex gap-8">
+<a href="features.html" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
+<a href="agents.html" class="text-sm text-gray-400 hover:text-white transition-colors">Agents</a>
+<a href="stack.html" class="text-sm text-gray-400 hover:text-white transition-colors">Stack</a>
+<a href="usecases.html" class="text-sm text-orange-400 font-medium">Use Cases</a>
+<a href="download.html" class="text-sm text-gray-400 hover:text-white transition-colors">Download</a>
+<a href="docs.html" class="text-sm text-gray-400 hover:text-white transition-colors">Docs</a>
+</nav>
+<button class="btn-glow px-6 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+Download
+</button>
+</div>
+</header>
+
+<main class="flex-grow pt-32 px-6">
+<div class="max-w-7xl mx-auto">
+
+<div class="text-center mb-12">
+<h1 class="text-5xl font-bold mb-4">50+ Real-World <span class="text-gradient">Use Cases</span></h1>
+<p class="text-xl text-gray-300 max-w-2xl mx-auto">Developed by <strong class="text-orange-400">Lux Automaton</strong>. Discover how entrepreneurs, developers, traders, and creators use Lux AI Studio to automate, innovate, and profit.</p>
+</div>
+
+<!-- Category Navigation -->
+<div class="category-nav mb-12">
+<div class="flex flex-wrap justify-center gap-3">
+<a href="#business" class="px-4 py-2 rounded-full bg-orange-500/20 text-orange-400 text-sm font-medium hover:bg-orange-500/30 transition-colors">Business</a>
+<a href="#trading" class="px-4 py-2 rounded-full bg-green-500/20 text-green-400 text-sm font-medium hover:bg-green-500/30 transition-colors">Stock Trading</a>
+<a href="#crypto" class="px-4 py-2 rounded-full bg-blue-500/20 text-blue-400 text-sm font-medium hover:bg-blue-500/30 transition-colors">Crypto</a>
+<a href="#appdev" class="px-4 py-2 rounded-full bg-purple-500/20 text-purple-400 text-sm font-medium hover:bg-purple-500/30 transition-colors">App Dev</a>
+<a href="#youtube" class="px-4 py-2 rounded-full bg-red-500/20 text-red-400 text-sm font-medium hover:bg-red-500/30 transition-colors">YouTube</a>
+<a href="#research" class="px-4 py-2 rounded-full bg-cyan-500/20 text-cyan-400 text-sm font-medium hover:bg-cyan-500/30 transition-colors">Research</a>
+<a href="#games" class="px-4 py-2 rounded-full bg-yellow-500/20 text-yellow-400 text-sm font-medium hover:bg-yellow-500/30 transition-colors">Games</a>
+<a href="#music" class="px-4 py-2 rounded-full bg-pink-500/20 text-pink-400 text-sm font-medium hover:bg-pink-500/30 transition-colors">Music</a>
+<a href="#money" class="px-4 py-2 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-medium hover:bg-emerald-500/30 transition-colors">Make Money</a>
+</div>
+</div>
+
+<!-- Business -->
+<section id="business" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-orange-400">business</span>
+</span>
+Business Operations
+</h2>
+<p class="text-gray-400 mb-8">Automate and scale your business operations with local AI</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">1. AI Business Analyst</h3>
+<p class="text-sm text-gray-400">Automate market research, competitor analysis, and business intelligence reporting.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">2. Smart Contract Generator</h3>
+<p class="text-sm text-gray-400">Draft legal contracts, NDAs, and agreements tailored to your business needs.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">3. Customer Support Agent</h3>
+<p class="text-sm text-gray-400">Build an AI support bot that handles inquiries 24/7 without cloud dependency.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">4. Invoice & Expense Tracker</h3>
+<p class="text-sm text-gray-400">Automate financial tracking, generate invoices, and reconcile expenses.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">5. HR Recruitment Assistant</h3>
+<p class="text-sm text-gray-400">Screen resumes, generate job descriptions, and schedule interviews automatically.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">6. Inventory Management</h3>
+<p class="text-sm text-gray-400">Predict stock needs, track inventory, and automate reordering.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">7. Email Marketing Automation</h3>
+<p class="text-sm text-gray-400">Generate personalized email campaigns, track engagement, optimize open rates.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">8. Project Management AI</h3>
+<p class="text-sm text-gray-400">Automate task assignment, progress tracking, and deadline reminders.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">9. Sales Pipeline Optimizer</h3>
+<p class="text-sm text-gray-400">Score leads, predict conversions, and automate follow-up sequences.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-orange-400 mb-2">10. Meeting Notes Summarizer</h3>
+<p class="text-sm text-gray-400">Transcribe and summarize meetings, extract action items automatically.</p>
+</div>
+</div>
+</section>
+
+<!-- Stock Trading -->
+<section id="trading" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-green-400">show_chart</span>
+</span>
+Stock Trading & Investing
+</h2>
+<p class="text-gray-400 mb-8">Build automated trading systems with local AI analysis</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-green-400 mb-2">11. Technical Analysis Bot</h3>
+<p class="text-sm text-gray-400">Analyze charts, identify patterns, and generate trading signals locally.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-green-400 mb-2">12. News Sentiment Analyzer</h3>
+<p class="text-sm text-gray-400">Parse financial news and social media to gauge market sentiment.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-green-400 mb-2">13. Portfolio Rebalancer</h3>
+<p class="text-sm text-gray-400">Automatically rebalance your portfolio based on risk tolerance and targets.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-green-400 mb-2">14. Earnings Call Transcriber</h3>
+<p class="text-sm text-gray-400">Transcribe and analyze earnings calls to extract key insights.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-green-400 mb-2">15. Dividend Tracker</h3>
+<p class="text-sm text-gray-400">Track dividend payments, calculate yield, and project future income.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-green-400 mb-2">16. Risk Assessment Engine</h3>
+<p class="text-sm text-gray-400">Evaluate portfolio risk using VaR, Sharpe ratio, and custom metrics.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-green-400 mb-2">17. Algo Trading Strategy Tester</h3>
+<p class="text-sm text-gray-400">Backtest trading strategies against historical data locally.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-green-400 mb-2">18. Stock Screener</h3>
+<p class="text-sm text-gray-400">Filter stocks based on P/E, market cap, growth metrics, and more.</p>
+</div>
+</div>
+</section>
+
+<!-- Crypto -->
+<section id="crypto" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-blue-400">currency_bitcoin</span>
+</span>
+Crypto Investing
+</h2>
+<p class="text-gray-400 mb-8">Automate crypto analysis and portfolio management</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-blue-400 mb-2">19. On-Chain Analytics</h3>
+<p class="text-sm text-gray-400">Analyze wallet movements, DeFi TVL, and network activity.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-blue-400 mb-2">20. Smart Contract Auditor</h3>
+<p class="text-sm text-gray-400">Review deployed contracts for vulnerabilities and risks.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-blue-400 mb-2">21. Tokenomics Analyzer</h3>
+<p class="text-sm text-gray-400">Evaluate token supply, distribution, and inflation mechanisms.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-blue-400 mb-2">22. DeFi Yield Optimizer</h3>
+<p class="text-sm text-gray-400">Calculate best yield farming opportunities across protocols.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-blue-400 mb-2">23. Whale Alert Monitor</h3>
+<p class="text-sm text-gray-400">Track large wallet transactions and alert on significant movements.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-blue-400 mb-2">24. Gas Fee Predictor</h3>
+<p class="text-sm text-gray-400">Predict optimal times to execute transactions based on network activity.</p>
+</div>
+</div>
+</section>
+
+<!-- App Development -->
+<section id="appdev" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-purple-400">code</span>
+</span>
+App & Software Development
+</h2>
+<p class="text-gray-400 mb-8">Build, test, and deploy applications with AI assistance</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-purple-400 mb-2">25. Full-Stack Code Generator</h3>
+<p class="text-sm text-gray-400">Generate complete web apps from natural language specifications.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-purple-400 mb-2">26. Bug Detection & Fix</h3>
+<p class="text-sm text-gray-400">Automatically find and fix bugs in your codebase.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-purple-400 mb-2">27. API Documentation Writer</h3>
+<p class="text-sm text-gray-400">Generate comprehensive API docs from code comments.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-purple-400 mb-2">28. Unit Test Generator</h3>
+<p class="text-sm text-gray-400">Create comprehensive test suites automatically.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-purple-400 mb-2">29. Code Review Assistant</h3>
+<p class="text-sm text-gray-400">Automated code reviews with security and performance suggestions.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-purple-400 mb-2">30. Database Schema Designer</h3>
+<p class="text-sm text-gray-400">Design optimal database schemas based on your data requirements.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-purple-400 mb-2">31. Mobile App Generator</h3>
+<p class="text-sm text-gray-400">Build cross-platform mobile apps from specifications.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-purple-400 mb-2">32. CI/CD Pipeline Builder</h3>
+<p class="text-sm text-gray-400">Automate deployment pipelines with custom configurations.</p>
+</div>
+</div>
+</section>
+
+<!-- YouTube -->
+<section id="youtube" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-red-400">play_circle</span>
+</span>
+YouTube Channel Automation
+</h2>
+<p class="text-gray-400 mb-8">Build and grow your YouTube presence with AI</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-red-400 mb-2">33. Video Script Writer</h3>
+<p class="text-sm text-gray-400">Generate engaging video scripts tailored to your niche.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-red-400 mb-2">34. Thumbnail Designer</h3>
+<p class="text-sm text-gray-400">Create click-worthy thumbnail concepts and designs.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-red-400 mb-2">35. Title & Tag Optimizer</h3>
+<p class="text-sm text-gray-400">Generate SEO-optimized titles and tags for maximum reach.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-red-400 mb-2">36. Video Editor Assistant</h3>
+<p class="text-sm text-gray-400">Plan video cuts, suggest B-roll, and generate captions.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-red-400 mb-2">37. Comment Responder</h3>
+<p class="text-sm text-gray-400">Automate personalized replies to engage with your audience.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-red-400 mb-2">38. Analytics Dashboard</h3>
+<p class="text-sm text-gray-400">Track performance, suggest improvements, predict trends.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-red-400 mb-2">39. Content Calendar Planner</h3>
+<p class="text-sm text-gray-400">Plan video topics, schedule uploads, track deadlines.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-red-400 mb-2">40. Shorts Generator</h3>
+<p class="text-sm text-gray-400">Identify clip-worthy moments from long-form content.</p>
+</div>
+</div>
+</section>
+
+<!-- Research -->
+<section id="research" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-cyan-400">science</span>
+</span>
+Research & Optimization
+</h2>
+<p class="text-gray-400 mb-8">Accelerate research and optimize processes with AI</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-cyan-400 mb-2">41. Literature Review Generator</h3>
+<p class="text-sm text-gray-400">Summarize academic papers and generate literature reviews.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-cyan-400 mb-2">42. Data Analysis Assistant</h3>
+<p class="text-sm text-gray-400">Clean, analyze, and visualize datasets with statistical insights.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-cyan-400 mb-2">43. SEO Content Optimizer</h3>
+<p class="text-sm text-gray-400">Optimize website content for search engine rankings.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-cyan-400 mb-2">44. A/B Test Analyzer</h3>
+<p class="text-sm text-gray-400">Analyze test results and recommend winning variations.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-cyan-400 mb-2">45. Competitor Research Bot</h3>
+<p class="text-sm text-gray-400">Monitor competitors and extract strategic insights.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-cyan-400 mb-2">46. Conversion Rate Optimizer</h3>
+<p class="text-sm text-gray-400">Analyze funnel and suggest improvements to boost conversions.</p>
+</div>
+</div>
+</section>
+
+<!-- Games -->
+<section id="games" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-yellow-400">sports_esports</span>
+</span>
+Game Development
+</h2>
+<p class="text-gray-400 mb-8">Create games and interactive experiences with AI</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-yellow-400 mb-2">47. Game Design Documenter</h3>
+<p class="text-sm text-gray-400">Generate comprehensive game design docs and mechanics.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-yellow-400 mb-2">48. NPC Dialogue Writer</h3>
+<p class="text-sm text-gray-400">Create immersive dialogue trees for characters.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-yellow-400 mb-2">49. Level Designer</h3>
+<p class="text-sm text-gray-400">Generate level layouts and game progression curves.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-yellow-400 mb-2">50. Game Asset Describer</h3>
+<p class="text-sm text-gray-400">Generate prompts for AI art tools to create game assets.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-yellow-400 mb-2">51. QA Testing Bot</h3>
+<p class="text-sm text-gray-400">Automate game testing and bug reporting.</p>
+</div>
+</div>
+</section>
+
+<!-- Music -->
+<section id="music" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-pink-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-pink-400">music_note</span>
+</span>
+Music Production
+</h2>
+<p class="text-gray-400 mb-8">Create and produce music with AI assistance</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-pink-400 mb-2">52. Lyric Writer</h3>
+<p class="text-sm text-gray-400">Generate song lyrics in various styles and genres.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-pink-400 mb-2">53. Chord Progression Generator</h3>
+<p class="text-sm text-gray-400">Create harmonic progressions for your tracks.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-pink-400 mb-2">54. Podcast Show Notes</h3>
+<p class="text-sm text-gray-400">Generate detailed show notes and timestamps from audio.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-pink-400 mb-2">55. Mix Engineer Assistant</h3>
+<p class="text-sm text-gray-400">Get mixing suggestions and frequency balance advice.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-pink-400 mb-2">56. Sound Design Consultant</h3>
+<p class="text-sm text-gray-400">Generate sound effects and foley descriptions.</p>
+</div>
+</div>
+</section>
+
+<!-- Make Money -->
+<section id="money" class="mb-16">
+<h2 class="text-3xl font-bold mb-2 flex items-center gap-3">
+<span class="w-10 h-10 rounded-xl bg-emerald-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-xl text-emerald-400">attach_money</span>
+</span>
+Money Making Opportunities
+</h2>
+<p class="text-gray-400 mb-8">Fast-track your income with AI-powered strategies</p>
+
+<div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-emerald-400 mb-2">57. Freelance Proposal Writer</h3>
+<p class="text-sm text-gray-400">Generate winning proposals for Upwork, Fiverr, Toptal.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-emerald-400 mb-2">58. SaaS Idea Generator</h3>
+<p class="text-sm text-gray-400">Brainstorm validated SaaS ideas with market analysis.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-emerald-400 mb-2">59. Digital Product Creator</h3>
+<p class="text-sm text-gray-400">Generate e-books, templates, and digital assets for sale.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-emerald-400 mb-2">60. Affiliate Marketing Manager</h3>
+<p class="text-sm text-gray-400">Optimize campaigns, write content, track performance.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-emerald-400 mb-2">61. Course Creator Assistant</h3>
+<p class="text-sm text-gray-400">Outline courses, write lessons, generate quizzes.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-emerald-400 mb-2">62. Print-on-Demand Designer</h3>
+<p class="text-sm text-gray-400">Create designs for Merch, Redbubble, and Printful.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-emerald-400 mb-2">63. Virtual Assistant Service</h3>
+<p class="text-sm text-gray-400">Build an AI VA business to serve multiple clients.</p>
+</div>
+<div class="glass rounded-xl p-5 use-case-card">
+<h3 class="font-semibold text-emerald-400 mb-2">64. Automation Consultant</h3>
+<p class="text-sm text-gray-400">Create automation solutions for businesses and sell them.</p>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="text-center pb-20">
+<div class="glass rounded-3xl p-10 inline-block">
+<h2 class="text-3xl font-bold mb-4">Ready to Start?</h2>
+<p class="text-gray-400 mb-6 max-w-lg">All these use cases run 100% locally. Your data never leaves your machine.</p>
+<button class="btn-glow px-10 py-4 rounded-2xl font-semibold text-lg inline-flex items-center gap-2">
+<span class="material-symbols-outlined">download</span>
+Download Lux Studio
+</button>
+</div>
+</section>
+
+</div>
+</main>
+
+<footer class="border-t border-white/10 py-12 px-6 mt-10">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<img src="/assets/logo_2.png" alt="Lux" class="h-8 w-auto" />
+<span class="font-semibold">LUX AI STUDIO</span>
+</div>
+<div class="text-center md:text-right">
+<p class="text-sm text-gray-500">Developed by <span class="text-orange-400 font-semibold">Lux Automaton</span></p>
+</div>
+<div class="flex gap-6 text-sm text-gray-500">
+<a href="docs.html" class="hover:text-white transition-colors">Documentation</a>
+<a href="#" class="hover:text-white transition-colors">GitHub</a>
+</div>
+<p class="text-sm text-gray-600">© 2024 Lux AI Studio</p>
+</div>
+</footer>
+</body>
+</html>
