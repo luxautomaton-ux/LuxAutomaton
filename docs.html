@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Documentation - Lux AI Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+    * { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; }
+    body { background: #0a0a0b; }
+    .bg-image { position: fixed; inset: 0; background-image: url('assets/background.png'); background-size: cover; background-position: center; z-index: -1; }
+    .bg-overlay { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0.6) 0%, rgba(10,10,11,0.85) 100%); pointer-events: none; z-index: 0; }
+    main, header, footer { position: relative; z-index: 1; }
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+    .glass:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,107,0,0.2); }
+    .btn-glow { background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%); box-shadow: 0 4px 20px rgba(255,107,0,0.3); transition: all 0.3s ease; }
+    .btn-glow:hover { box-shadow: 0 6px 30px rgba(255,107,0,0.5); transform: translateY(-2px); }
+    .text-gradient { background: linear-gradient(135deg, #ff6b00 0%, #ffb347 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .card-3d { transform: perspective(1000px); transition: all 0.4s ease; }
+    .card-3d:hover { transform: translateY(-8px) rotateX(2deg); }
+    .code-block { background: #0d0d0e; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px; font-family: 'JetBrains Mono', monospace; }
+    .toc-link { display: block; padding: 8px 12px; border-radius: 8px; color: #9ca3af; transition: all 0.2s; }
+    .toc-link:hover, .toc-link.active { background: rgba(255,107,0,0.1); color: #ff6b00; }
+</style>
+</head>
+<body class="text-white antialiased min-h-screen flex flex-col overflow-x-hidden">
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-2xl border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a href="/" class="flex items-center gap-3 group">
+<img src="./assets/logo_2.png" alt="Lux" class="h-9 w-auto" />
+<span class="text-lg font-semibold tracking-tight">LUX AI STUDIO</span>
+</a>
+<nav class="hidden md:flex gap-8">
+<a href="features.html" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
+<a href="agents.html" class="text-sm text-gray-400 hover:text-white transition-colors">Agents</a>
+<a href="stack.html" class="text-sm text-gray-400 hover:text-white transition-colors">Stack</a>
+<a href="usecases.html" class="text-sm text-gray-400 hover:text-white transition-colors">Use Cases</a>
+<a href="download.html" class="text-sm text-gray-400 hover:text-white transition-colors">Download</a>
+<a href="docs.html" class="text-sm text-orange-400 font-medium">Docs</a>
+</nav>
+<button class="btn-glow px-6 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+Download
+</button>
+</div>
+</header>
+
+<main class="flex-grow pt-32 px-6">
+<div class="max-w-6xl mx-auto">
+<div class="flex flex-col lg:flex-row gap-8">
+<aside class="lg:w-64 flex-shrink-0">
+<div class="glass rounded-2xl p-4 sticky top-24">
+<h3 class="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-4">Quick Links</h3>
+<nav class="space-y-1">
+<a href="#getting-started" class="toc-link">Getting Started</a>
+<a href="#installation" class="toc-link">Installation</a>
+<a href="#configuration" class="toc-link">Configuration</a>
+<a href="#models" class="toc-link">Switching Models</a>
+<a href="#agents" class="toc-link">Using Agents</a>
+<a href="#privacy" class="toc-link">Privacy & Security</a>
+<a href="#troubleshooting" class="toc-link">Troubleshooting</a>
+</nav>
+</div>
+</aside>
+
+<div class="flex-1 space-y-12 pb-20">
+<section id="getting-started">
+<h1 class="text-4xl font-bold mb-6">Getting Started with <span class="text-gradient">Lux AI Studio</span></h1>
+<p class="text-xl text-gray-300 mb-8">Developed by <strong class="text-orange-400">Lux Automaton</strong>. Welcome to the Lux AI Ecosystem. This guide will help you set up and start using your local AI operating stack.</p>
+
+<div class="glass rounded-2xl p-6">
+<h2 class="text-2xl font-bold mb-4">What You'll Need</h2>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> macOS 13+, Windows 11, or Linux</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> 16GB RAM minimum (64GB recommended)</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> Apple Silicon, NVIDIA GPU, or AMD GPU</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> 20GB free disk space</li>
+</ul>
+</div>
+</section>
+
+<section id="installation">
+<h2 class="text-3xl font-bold mb-6">Installation</h2>
+<p class="text-gray-400 mb-6">Download and install Lux AI Studio on your machine.</p>
+
+<div class="code-block mb-6">
+<p class="text-gray-400 mb-2"># Clone the repository</p>
+<p class="text-white">git clone https://github.com/luxautomaton/lux-ai-studio.git</p>
+<p class="text-white mt-2">cd lux-ai-studio</p>
+<p class="text-gray-400 mt-4 mb-2"># Install dependencies</p>
+<p class="text-white">npm install</p>
+<p class="text-gray-400 mt-4 mb-2"># Start the application</p>
+<p class="text-white">npm run dev</p>
+</div>
+
+<p class="text-gray-400">The app will be available at <code class="text-orange-400">http://localhost:5175</code></p>
+</section>
+
+<section id="configuration">
+<h2 class="text-3xl font-bold mb-6">Configuration</h2>
+<p class="text-gray-400 mb-6">Configure your environment to get the most out of Lux AI Studio.</p>
+
+<div class="code-block mb-6">
+<p class="text-gray-400 mb-2"># Create .env file in your project root</p>
+<p class="text-white">DEFAULT_MODEL=gemma-4</p>
+<p class="text-white mt-2">OLLAMA_HOST=http://localhost:11434</p>
+<p class="text-white mt-2">CLAUDE_CODE_USE_OPENAI=1</p>
+</div>
+
+<div class="glass rounded-2xl p-6">
+<h3 class="text-xl font-bold mb-4">Environment Variables</h3>
+<div class="space-y-4">
+<div>
+<p class="font-semibold text-orange-400">DEFAULT_MODEL</p>
+<p class="text-gray-400 text-sm">The default model used for inference. Options: gemma-4, qwen2.5, llama3</p>
+</div>
+<div>
+<p class="font-semibold text-green-400">OLLAMA_HOST</p>
+<p class="text-gray-400 text-sm">The host URL for your Ollama instance</p>
+</div>
+<div>
+<p class="font-semibold text-blue-400">CLAUDE_CODE_USE_OPENAI</p>
+<p class="text-gray-400 text-sm">Set to 1 to use local Opencode instead of cloud API</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="models">
+<h2 class="text-3xl font-bold mb-6">Switching Models</h2>
+<p class="text-gray-400 mb-6">All Lux apps are synchronized. Change the model in one place.</p>
+
+<div class="glass rounded-2xl p-6">
+<h3 class="text-xl font-bold mb-4">Recommended Models</h3>
+<div class="grid md:grid-cols-3 gap-4">
+<div class="bg-black/30 rounded-xl p-4">
+<p class="font-bold text-orange-400 mb-1">Gemma 4</p>
+<p class="text-sm text-gray-400">Best for coding and complex logic tasks</p>
+</div>
+<div class="bg-black/30 rounded-xl p-4">
+<p class="font-bold text-green-400 mb-1">Qwen 2.5</p>
+<p class="text-sm text-gray-400">Fast and creative for quick tasks</p>
+</div>
+<div class="bg-black/30 rounded-xl p-4">
+<p class="font-bold text-blue-400 mb-1">Llama 3</p>
+<p class="text-sm text-gray-400">Balanced performance for general use</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="agents">
+<h2 class="text-3xl font-bold mb-6">Using Agents</h2>
+<p class="text-gray-400 mb-6">Each agent has specific capabilities. Here's how to use them effectively.</p>
+
+<div class="space-y-4">
+<div class="glass rounded-2xl p-6">
+<h3 class="text-xl font-bold mb-3 flex items-center gap-2">
+<span class="text-orange-400">Manus</span> — Autonomous Research
+</h3>
+<p class="text-gray-400 mb-3">Best for research tasks, web crawling, and complex automation.</p>
+<div class="code-block">
+<p class="text-white">lux agent start --agent=manus --task="research topic"</p>
+</div>
+</div>
+
+<div class="glass rounded-2xl p-6">
+<h3 class="text-xl font-bold mb-3 flex items-center gap-2">
+<span class="text-green-400">Claude Code</span> — Coding Assistant
+</h3>
+<p class="text-gray-400 mb-3">Best for writing, reviewing, and debugging code.</p>
+<div class="code-block">
+<p class="text-white">lux agent start --agent=claude --mode=code</p>
+</div>
+</div>
+
+<div class="glass rounded-2xl p-6">
+<h3 class="text-xl font-bold mb-3 flex items-center gap-2">
+<span class="text-blue-400">CoWork</span> — Collaboration
+</h3>
+<p class="text-gray-400 mb-3">Best for team workflows and multi-agent coordination.</p>
+<div class="code-block">
+<p class="text-white">lux cowork start --workflow=approval</p>
+</div>
+</div>
+
+<div class="glass rounded-2xl p-6">
+<h3 class="text-xl font-bold mb-3 flex items-center gap-2">
+<span class="text-purple-400">Hermes</span> — Chat Interface
+</h3>
+<p class="text-gray-400 mb-3">Best for interactive conversations with agents.</p>
+<div class="code-block">
+<p class="text-white">lux hermes start --port=8787</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="privacy">
+<h2 class="text-3xl font-bold mb-6">Privacy & Security</h2>
+<p class="text-gray-400 mb-6">Your data never leaves your machine. Here's how we ensure privacy.</p>
+
+<div class="glass rounded-2xl p-6">
+<h3 class="text-xl font-bold mb-4">Local-First Architecture</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> All prompts stored locally in SQLite</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> Agent sessions saved as JSON</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> No cloud authentication required</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> Air-gapped system compatible</li>
+</ul>
+</div>
+</section>
+
+<section id="troubleshooting">
+<h2 class="text-3xl font-bold mb-6">Troubleshooting</h2>
+<p class="text-gray-400 mb-6">Common issues and how to resolve them.</p>
+
+<div class="space-y-4">
+<div class="glass rounded-2xl p-6">
+<h3 class="text-lg font-bold mb-2">Model not loading</h3>
+<p class="text-gray-400">Make sure Ollama is running: <code class="text-orange-400">ollama serve</code></p>
+</div>
+
+<div class="glass rounded-2xl p-6">
+<h3 class="text-lg font-bold mb-2">Port already in use</h3>
+<p class="text-gray-400">Check for conflicting processes: <code class="text-orange-400">lsof -i :5175</code></p>
+</div>
+
+<div class="glass rounded-2xl p-6">
+<h3 class="text-lg font-bold mb-2">Memory issues</h3>
+<p class="text-gray-400">Switch to a smaller model or increase system RAM</p>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</main>
+
+<footer class="border-t border-white/10 py-12 px-6 mt-20">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<img src="./assets/logo_2.png" alt="Lux" class="h-8 w-auto" />
+<span class="font-semibold">LUX AI STUDIO</span>
+</div>
+<div class="text-center md:text-right">
+<p class="text-sm text-gray-500">Developed by <span class="text-orange-400 font-semibold">Lux Automaton</span></p>
+</div>
+<div class="flex gap-6 text-sm text-gray-500">
+<a href="#" class="hover:text-white transition-colors">Documentation</a>
+<a href="#" class="hover:text-white transition-colors">GitHub</a>
+</div>
+<p class="text-sm text-gray-600">© 2024 Lux AI Studio</p>
+</div>
+</footer>
+</body>
+</html>

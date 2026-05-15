@@ -1,309 +1,525 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="dark" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lux AI Studio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="/static/brand/logo.png">
-    <style>
-        :root {
-            --bg: #050505;
-            --surface: #111111;
-            --surface-2: #171717;
-            --line: #2a2a2a;
-            --text: #f5f5f5;
-            --muted: #a3a3a3;
-            --primary: #f97316;
-            --primary-strong: #ea580c;
-            --shadow: 0 18px 48px rgba(0, 0, 0, 0.45);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            min-height: 100vh;
-            background:
-                linear-gradient(180deg, rgba(0,0,0,0.65), rgba(0,0,0,0.85)),
-                url('/static/brand/background.png') center/cover no-repeat;
-            background-attachment: fixed;
-            color: var(--text);
-            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 24px;
-        }
-
-        .shell {
-            width: min(1180px, 100%);
-            border: 1px solid var(--line);
-            border-radius: 22px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            background: rgba(9, 9, 9, 0.86);
-            backdrop-filter: blur(8px);
-        }
-
-        .hero {
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 20px;
-            padding: 34px;
-            border-bottom: 1px solid var(--line);
-        }
-
-        .brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 18px;
-        }
-
-        .brand img {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            border: 1px solid var(--line);
-            object-fit: cover;
-        }
-
-        .brand span {
-            font-size: 0.82rem;
-            letter-spacing: 0.14em;
-            text-transform: uppercase;
-            color: var(--muted);
-            font-weight: 700;
-        }
-
-        h1 {
-            font-size: clamp(2rem, 5vw, 3.3rem);
-            line-height: 1.05;
-            letter-spacing: -0.02em;
-            margin-bottom: 14px;
-        }
-
-        h1 em {
-            font-style: normal;
-            color: var(--primary);
-        }
-
-        .copy {
-            color: #d4d4d4;
-            line-height: 1.6;
-            max-width: 62ch;
-            margin-bottom: 18px;
-        }
-
-        .actions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .btn {
-            border: 1px solid var(--line);
-            background: var(--surface);
-            color: var(--text);
-            padding: 10px 14px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 0.86rem;
-            transition: 160ms ease;
-        }
-
-        .btn:hover {
-            border-color: var(--primary);
-            transform: translateY(-1px);
-        }
-
-        .btn.primary {
-            border-color: var(--primary);
-            background: var(--primary);
-            color: #1c0f04;
-        }
-
-        .btn.primary:hover {
-            background: var(--primary-strong);
-            border-color: var(--primary-strong);
-            color: #fff;
-        }
-
-        .panel {
-            border: 1px solid var(--line);
-            border-radius: 14px;
-            background: linear-gradient(160deg, #111 0%, #171717 100%);
-            padding: 16px;
-        }
-
-        .panel h2 {
-            font-size: 0.82rem;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 10px;
-        }
-
-        .stack {
-            display: grid;
-            gap: 8px;
-        }
-
-        .chip {
-            border: 1px solid #313131;
-            background: #131313;
-            border-radius: 9px;
-            padding: 8px 10px;
-            font-size: 0.83rem;
-            color: #dfdfdf;
-        }
-
-        .grid {
-            display: grid;
-            grid-template-columns: repeat(4, minmax(0, 1fr));
-            gap: 12px;
-            padding: 22px 34px 30px;
-        }
-
-        .card {
-            border: 1px solid var(--line);
-            border-radius: 12px;
-            background: var(--surface-2);
-            padding: 14px;
-        }
-
-        .card h3 {
-            font-size: 0.9rem;
-            margin-bottom: 6px;
-            color: var(--text);
-        }
-
-        .card p {
-            font-size: 0.78rem;
-            color: var(--muted);
-            line-height: 1.45;
-        }
-
-        @media (max-width: 980px) {
-            .hero { grid-template-columns: 1fr; }
-            .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-        }
-
-        @media (max-width: 620px) {
-            .shell { border-radius: 16px; }
-            .hero { padding: 22px; }
-            .grid { grid-template-columns: 1fr; padding: 14px 22px 22px; }
-        }
-    </style>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Lux AI Studio - Local AI Operating Stack</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap');
+    * { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; }
+    body { background: #0a0a0b; }
+    .bg-image { position: fixed; inset: 0; background-image: url('assets/background.png'); background-size: cover; background-position: center; z-index: -1; }
+    .bg-overlay { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0.6) 0%, rgba(10,10,11,0.75) 50%, rgba(10,10,11,0.9) 100%); pointer-events: none; z-index: 0; }
+    main, header, footer { position: relative; z-index: 1; }
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+    .glass:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,107,0,0.2); }
+    .btn-glow { background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%); box-shadow: 0 4px 20px rgba(255,107,0,0.3); transition: all 0.3s ease; }
+    .btn-glow:hover { box-shadow: 0 6px 30px rgba(255,107,0,0.5); transform: translateY(-2px); }
+    .text-gradient { background: linear-gradient(135deg, #ff6b00 0%, #ffb347 50%, #ff6b00 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+    .card-3d { transform: perspective(1000px); transition: all 0.4s ease; }
+    .card-3d:hover { transform: translateY(-8px) rotateX(2deg); }
+    .terminal-glow { box-shadow: 0 0 40px rgba(255,107,0,0.15), inset 0 0 60px rgba(0,0,0,0.5); }
+    .floating { animation: float 6s ease-in-out infinite; }
+    @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+</style>
 </head>
-<body>
-    <main class="shell">
-        <section class="hero">
-            <div>
-                <div class="brand">
-                    <img src="/static/brand/logo.png" alt="Lux AI Studio">
-                    <span>Lux AI Ecosystem — 2026</span>
-                </div>
-                <h1>The <em>Sovereign Intelligence</em> Layer for absolute autonomy.</h1>
-                <p class="copy">
-                    Lux AI Studio is a premium, local-first command center that bridges high-level reasoning with absolute data sovereignty. Designed to run entirely on your hardware, it integrates world-class coding agents, cinematic video generation, and autonomous task execution into a single, private control plane.
-                </p>
-                <div class="actions">
-                    <a id="main-action" class="btn primary" href="/dashboard" style="box-shadow: 0 0 20px rgba(249, 115, 22, 0.5);">Enter Command Center</a>
-                    <a class="btn" href="/models">🚀 Inference Engine</a>
-                    <a class="btn" href="/system-scanner">Diagnostic Scanner</a>
-                </div>
-            </div>
-            <aside class="panel">
-                <h2>Pre-flight Check</h2>
-                <div class="stack" id="readiness-stack">
-                    <div class="chip" id="check-node">🔍 Checking Node.js...</div>
-                    <div class="chip" id="check-python">🔍 Checking Python...</div>
-                    <div class="chip" id="check-ollama">🔍 Checking Ollama...</div>
-                    <div class="chip" id="check-luxcli">🔍 Checking Lux CLI...</div>
-                </div>
-                <div id="readiness-warning" style="display:none; margin-top: 12px; font-size: 0.75rem; color: #f87171; line-height: 1.4;">
-                    ⚠️ Some requirements are missing. The system may not function correctly until dependencies are installed.
-                </div>
-            </aside>
-        </section>
-        <section class="grid">
-            <article class="card" style="border-top: 2px solid var(--primary);">
-                <h3>✨ Lux Claude UI</h3>
-                <p>The premium React interface for Claude Code, featuring cinematic transitions and real-time execution monitoring.</p>
-            </article>
-            <article class="card">
-                <h3>🎬 Higgsfield Studio</h3>
-                <p>Advanced generative engine for video and animation, leveraging Hyperframes for raw production quality.</p>
-            </article>
-            <article class="card">
-                <h3>📦 Inference Hub</h3>
-                <p>Local Model App Store. Seamlessly pull and manage Gemma 4, Qwen 2.5, and Llama 3.2 instances.</p>
-            </article>
-            <article class="card">
-                <h3>🤝 Lux CoWork</h3>
-                <p>Collaborative multi-agent workspace with local MCP integration and bidirectional terminal control.</p>
-            </article>
-            <article class="card">
-                <h3>⚡ Lux Manus</h3>
-                <p>The high-level reasoning engine for multi-step task planning and autonomous web execution.</p>
-            </article>
-            <article class="card">
-                <h3>▶️ Tube Optimizer</h3>
-                <p>Viral YouTube growth studio with integrated AI planner, shorts generation, and metadata autopilot.</p>
-            </article>
-            <article class="card">
-                <h3>🧠 Hermes Agent</h3>
-                <p>The automation backbone for recurring tasks, system monitoring, and cross-platform growth loops.</p>
-            </article>
-            <article class="card">
-                <h3>💻 Super Terminal</h3>
-                <p>Next-gen CLI with persistent memory and local inference, bypasses login for instant productivity.</p>
-            </article>
-        </section>
-    </main>
+<body class="text-white antialiased min-h-screen flex flex-col overflow-x-hidden">
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
 
-    <script>
-        function updateChip(id, ok, label, downloadUrl) {
-            const el = document.getElementById(id);
-            if (!el) return;
-            if (ok) {
-                el.textContent = '✅ ' + label + ': Ready';
-                el.style.borderColor = '#16a34a';
-                el.style.color = '#4ade80';
-            } else {
-                el.innerHTML = `❌ ${label}: Missing <a href="${downloadUrl}" target="_blank" style="color: var(--primary); text-decoration: underline; margin-left: 5px;">Install</a>`;
-                el.style.borderColor = '#dc2626';
-                el.style.color = '#f87171';
-                document.getElementById('readiness-warning').style.display = 'block';
-            }
-        }
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-2xl border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a href="/" class="flex items-center gap-3 group">
+<img src="./assets/logo_2.png" alt="Lux" class="h-9 w-auto" />
+<span class="text-lg font-semibold tracking-tight">LUX AI STUDIO</span>
+</a>
+<nav class="hidden md:flex gap-8">
+<a href="features.html" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
+<a href="agents.html" class="text-sm text-gray-400 hover:text-white transition-colors">Agents</a>
+<a href="stack.html" class="text-sm text-gray-400 hover:text-white transition-colors">Stack</a>
+<a href="usecases.html" class="text-sm text-gray-400 hover:text-white transition-colors">Use Cases</a>
+<a href="download.html" class="text-sm text-gray-400 hover:text-white transition-colors">Download</a>
+<a href="docs.html" class="text-sm text-gray-400 hover:text-white transition-colors">Docs</a>
+</nav>
+<button class="btn-glow px-6 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+Download
+</button>
+</div>
+</header>
 
-        async function checkStatus() {
-            try {
-                const response = await fetch('/status');
-                const data = await response.json();
-                
-                // Update Readiness Chips
-                updateChip('check-node', data.checks.node, 'Node.js', 'https://nodejs.org');
-                updateChip('check-python', true, 'Python', 'https://python.org'); // If we reached here, python is running hub.py
-                updateChip('check-ollama', data.ollama, 'Ollama', 'https://ollama.com');
-                updateChip('check-luxcli', data.checks.luxcli_build, 'Lux CLI Engine', '#');
+<main class="flex-grow pt-24">
 
-                const actionBtn = document.getElementById('main-action');
-                if (data.auth_status && data.auth_status.needsSetup) {
-                    actionBtn.textContent = 'Initialize System (New Account)';
-                    actionBtn.href = 'http://localhost:3001';
-                    actionBtn.style.background = 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)';
-                }
-            } catch (e) {
-                console.error("Status check failed", e);
-            }
-        }
-        checkStatus();
-    </script>
+<!-- Hero -->
+<section class="min-h-[90vh] flex items-center justify-center px-6 py-20">
+<div class="max-w-6xl mx-auto text-center">
+<div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8 floating">
+<span class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></span>
+<span class="text-sm text-gray-300">v2.0.4 Stable Released</span>
+</div>
+
+<h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+Your Local AI<br/>
+<span class="text-gradient">Operating Stack</span>
+</h1>
+
+<p class="text-xl text-gray-300 max-w-3xl mx-auto mb-10 leading-relaxed">
+Welcome to Lux AI Studio — developed by <strong>Lux Automaton</strong>. A premium, local-first intelligence suite that combines high-level reasoning with absolute data sovereignty. Every component runs on your hardware. No cloud. No subscriptions. No compromises.
+</p>
+
+<div class="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+<button class="btn-glow px-8 py-4 rounded-2xl font-semibold text-lg flex items-center justify-center gap-3">
+<span class="material-symbols-outlined">bolt</span>
+Download Lux Studio
+</button>
+<a href="docs.html" class="px-8 py-4 rounded-2xl border border-white/20 text-white hover:bg-white/5 transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">menu_book</span>
+Read Documentation
+</a>
+</div>
+
+<!-- Terminal Mockup -->
+<div class="max-w-3xl mx-auto terminal-glow rounded-2xl overflow-hidden border border-white/10">
+<div class="flex items-center gap-2 px-4 py-3 bg-white/5 border-b border-white/5">
+<div class="w-3 h-3 rounded-full bg-red-500/60"></div>
+<div class="w-3 h-3 rounded-full bg-yellow-500/60"></div>
+<div class="w-3 h-3 rounded-full bg-green-500/60"></div>
+<span class="ml-4 text-sm text-gray-400 font-mono">lux-cli ~ /stack</span>
+</div>
+<div class="p-6 font-mono text-left text-sm bg-black/60">
+<p class="text-gray-400">&gt; lux init --local</p>
+<p class="text-gray-500 mt-1">[INFO] Initializing local environment...</p>
+<p class="text-gray-500">[INFO] Detecting hardware: Apple M3 Max (64GB)</p>
+<p class="text-green-400 mt-2">&gt; lux agent start --model=gemma-4</p>
+<p class="text-gray-500 mt-1">[INFO] Loading model weights...</p>
+<p class="text-green-400">Model loaded in 2.4s</p>
+<p class="mt-3 flex items-center gap-2">
+<span class="text-orange-400 font-bold">READY</span>
+<span class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Apps Grid -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-12">
+<h2 class="text-4xl font-bold mb-4">Four Powerful Apps.<br/><span class="text-gradient">One Unified Experience</span></h2>
+<p class="text-gray-400 max-w-xl mx-auto">Manage Manus, Claude Code, CoWork, Hermes OS, and more from a single command center.</p>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="glass rounded-2xl p-4 card-3d overflow-hidden">
+<div class="aspect-video rounded-xl overflow-hidden bg-black/40 mb-4">
+<img src="./assets/Manus.png" alt="Manus" class="w-full h-full object-cover" />
+</div>
+<h3 class="text-lg font-semibold mb-1">Manus</h3>
+<p class="text-sm text-gray-400">Autonomous research agent</p>
+</div>
+<div class="glass rounded-2xl p-4 card-3d overflow-hidden">
+<div class="aspect-video rounded-xl overflow-hidden bg-black/40 mb-4">
+<img src="./assets/Claude Code.png" alt="Claude Code" class="w-full h-full object-cover" />
+</div>
+<h3 class="text-lg font-semibold mb-1">Claude Code</h3>
+<p class="text-sm text-gray-400">Private coding copilot</p>
+</div>
+<div class="glass rounded-2xl p-4 card-3d overflow-hidden">
+<div class="aspect-video rounded-xl overflow-hidden bg-black/40 mb-4">
+<img src="./assets/Cowork.png" alt="CoWork" class="w-full h-full object-cover" />
+</div>
+<h3 class="text-lg font-semibold mb-1">CoWork</h3>
+<p class="text-sm text-gray-400">Collaborative workspace</p>
+</div>
+<div class="glass rounded-2xl p-4 card-3d overflow-hidden">
+<div class="aspect-video rounded-xl overflow-hidden bg-black/40 mb-4">
+<img src="./assets/Hermes.png" alt="Hermes OS" class="w-full h-full object-cover" />
+</div>
+<h3 class="text-lg font-semibold mb-1">Hermes OS</h3>
+<p class="text-sm text-gray-400">Agentic chat interface</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Hermes OS Deep Dive -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="glass rounded-3xl p-10">
+<h2 class="text-4xl font-bold mb-4"><span class="text-gradient">Hermes OS</span> — Deep Dive</h2>
+<p class="text-gray-300 text-lg mb-8">Hermes OS is a fully customized, local-first agentic chat interface built specifically for the Lux ecosystem. It provides an elegant, obsidian-themed UI for interacting with AI models while maintaining 100% privacy.</p>
+
+<div class="grid md:grid-cols-2 gap-8 mb-8">
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-purple-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-purple-400">auto_awesome</span>
+</span>
+Custom Features
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Swarm Mode</strong> — Multi-agent coordination with 8 specialized worker roles</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Profile-Aware Memory</strong> — Persistent conversation context per user</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Git Snapshots</strong> — Auto-save conversations with version control</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>JSON Mission Persistence</strong> — Save/load swarm missions</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Custom Styling</strong> — Obsidian dark theme with orange accents</li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-400">hub</span>
+</span>
+How It Works
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-orange-400">1.</span> Flask backend serves UI at <code class="text-orange-400">localhost:8787</code></li>
+<li class="flex items-center gap-3"><span class="text-orange-400">2.</span> Connects to Ollama for local inference</li>
+<li class="flex items-center gap-3"><span class="text-orange-400">3.</span> Routes through Opencode for API compatibility</li>
+<li class="flex items-center gap-3"><span class="text-orange-400">4.</span> Stores conversations in local JSON/SQLite</li>
+<li class="flex items-center gap-3"><span class="text-orange-400">5.</span> Swarm orchestrates multiple agents</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- YouTube Studio -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="glass rounded-3xl p-10">
+<h2 class="text-4xl font-bold mb-4"><span class="text-gradient">LuxTube</span> — YouTube Studio Automation</h2>
+<p class="text-gray-300 text-lg mb-8">LuxTube is a fully customized YouTube content creation suite. Built on top of a custom React + Vite frontend with real-time API integration for video management, analytics, and automated workflows.</p>
+
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-red-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-red-400">videocam</span>
+</span>
+Features
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Video Upload Automation</strong> — Programmatic upload to YouTube</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Analytics Dashboard</strong> — Real-time view counts, engagement metrics</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Thumbnail Generator</strong> — AI-powered thumbnail creation</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Script Writer</strong> — AI-generated video scripts</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Schedule Manager</strong> — Auto-schedule uploads</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>SEO Optimizer</strong> — Tags, titles, descriptions</li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-400">settings</span>
+</span>
+How It Works
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-blue-400">1.</span> React + Vite frontend with YouTube Data API v3</li>
+<li class="flex items-center gap-3"><span class="text-blue-400">2.</span> OAuth2 authentication for channel access</li>
+<li class="flex items-center gap-3"><span class="text-blue-400">3.</span> Node.js backend handles API calls</li>
+<li class="flex items-center gap-3"><span class="text-blue-400">4.</span> Stores video metadata locally</li>
+<li class="flex items-center gap-3"><span class="text-blue-400">5.</span> Integrates with HyperFrames for video rendering</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Lux Higgsfield -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="glass rounded-3xl p-10">
+<h2 class="text-4xl font-bold mb-4"><span class="text-gradient">Lux Higgsfield</span> — AI Video Production</h2>
+<p class="text-gray-300 text-lg mb-8">Lux Higgsfield Studio is a completely customized video production environment built for automated content creation. Originally based on Heygen technology, it's been completely reworked with custom controls, local rendering, and proprietary features.</p>
+
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-yellow-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-yellow-400">movie</span>
+</span>
+Custom Capabilities
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Local Avatar Rendering</strong> — No cloud dependency</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Custom Voice Cloning</strong> — Use your own voice</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Lip-Sync Engine</strong> — Wav2Lip integration</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Background Removal</strong> — U2Net transparency</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>TTS Engine</strong> — Kokoro for narration</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Composition System</strong> — HyperFrames HTML-based editor</li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-400">architecture</span>
+</span>
+Architecture
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-green-400">1.</span> React UI with customizable avatar controls</li>
+<li class="flex items-center gap-3"><span class="text-green-400">2.</span> FFmpeg for video processing</li>
+<li class="flex items-center gap-3"><span class="text-green-400">3.</span> Local model inference (no external API)</li>
+<li class="flex items-center gap-3"><span class="text-green-400">4.</span> Export to MP4, WebM, MOV</li>
+<li class="flex items-center gap-3"><span class="text-green-400">5.</span> HyperFrames for advanced compositions</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- System Scanner -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="glass rounded-3xl p-10">
+<h2 class="text-4xl font-bold mb-4"><span class="text-gradient">System Scanner</span> — Hardware & Tool Discovery</h2>
+<p class="text-gray-300 text-lg mb-8">The System Scanner automatically detects your hardware capabilities, installed tools, and environment. It provides real-time diagnostics to optimize your AI setup.</p>
+
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-cyan-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-cyan-400">radar</span>
+</span>
+What It Scans
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>CPU Detection</strong> — Model, cores, Apple Silicon vs Intel</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>GPU Capabilities</strong> — Metal, CUDA, ROCm availability</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>RAM & Storage</strong> — Available memory and disk space</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Tool Detection</strong> — Ollama, Claude, Node, Python versions</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Network Status</strong> — Local IPs, connectivity</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Recommended Models</strong> — Based on your hardware</li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-orange-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-orange-400">analytics</span>
+</span>
+Optimization
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-orange-400">1.</span> Auto-detects best model for your hardware</li>
+<li class="flex items-center gap-3"><span class="text-orange-400">2.</span> Suggests optimal context lengths</li>
+<li class="flex items-center gap-3"><span class="text-orange-400">3.</span> Recommends GPU vs CPU inference</li>
+<li class="flex tools-center gap-3"><span class="text-orange-400">4.</span> Identifies missing dependencies</li>
+<li class="flex items-center gap-3"><span class="text-orange-400">5.</span> Provides one-click fix options</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Opencode - Cheap Cloud AI -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="glass rounded-3xl p-10 border-2 border-orange-500/30">
+<h2 class="text-4xl font-bold mb-4"><span class="text-gradient">Opencode</span> — Cheap Cloud AI Setup</h2>
+<p class="text-gray-300 text-lg mb-6">Want to run AI in the cloud for cheap? Opencode acts as a high-performance proxy that mimics OpenAI/Anthropic APIs, allowing cloud-only tools to work locally or on cheap VPS instances.</p>
+
+<div class="grid md:grid-cols-2 gap-8">
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-green-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-green-400">cloud</span>
+</span>
+Cloud Setup Options
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Oracle Cloud Free Tier</strong> — 4 OCPUs, 24GB RAM, always free</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>$5 VPS (DigitalOcean/Linode)</strong> — 2GB+ RAM, running Ollama</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Colocation</strong> — Run on your own server in a data center</li>
+<li class="flex items-center gap-3"><span class="text-green-400">✓</span> <strong>Local + Cloud Hybrid</strong> — Heavy lifting on cloud, fast responses locally</li>
+</ul>
+</div>
+<div>
+<h3 class="text-xl font-semibold mb-4 flex items-center gap-2">
+<span class="w-10 h-10 rounded-xl bg-blue-500/20 flex items-center justify-center">
+<span class="material-symbols-outlined text-blue-400">vpn_key</span>
+</span>
+How to Connect
+</h3>
+<ul class="space-y-3 text-gray-300">
+<li class="flex items-center gap-3"><span class="text-blue-400">1.</span> Deploy Ollama on your VPS: <code class="text-orange-400">ollama serve --host 0.0.0.0</code></li>
+<li class="flex items-center gap-3"><span class="text-blue-400">2.</span> Point tools to VPS IP: <code class="text-orange-400">OLLAMA_HOST=http://your-vps:11434</code></li>
+<li class="flex items-center gap-3"><span class="text-blue-400">3.</span> Or use SSH tunnel for security: <code class="text-orange-400">ssh -N -L 11434:localhost:11434 user@vps</code></li>
+<li class="flex items-center gap-3"><span class="text-blue-400">4.</span> No API keys needed — run locally!</li>
+</ul>
+</div>
+</div>
+
+<div class="bg-black/40 rounded-xl p-6 mt-8">
+<h3 class="text-lg font-semibold mb-4 text-orange-400">Why Free Works</h3>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="text-center">
+<div class="text-3xl font-bold text-green-400 mb-2">$0</div>
+<div class="text-sm text-gray-400">Ollama is free & open source</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold text-green-400 mb-2">$0</div>
+<div class="text-sm text-gray-400">No API key required</div>
+</div>
+<div class="text-center">
+<div class="text-3xl font-bold text-green-400 mb-2">$0</div>
+<div class="text-sm text-gray-400">No rate limits locally</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- How It Helps -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-12">
+<h2 class="text-4xl font-bold mb-4">How It <span class="text-gradient">Helps</span></h2>
+</div>
+
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-orange-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-orange-400">hub</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">Unified Agent Control</h3>
+<p class="text-gray-400">All agents in one interface. No switching apps.</p>
+</div>
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-yellow-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-yellow-400">psychology</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">Lux Mythos Reasoning</h3>
+<p class="text-gray-400">Latent thinking via recurrent-depth transformers.</p>
+</div>
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-green-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-green-400">memory</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">Local Memory & Context</h3>
+<p class="text-gray-400">Agents remember your projects. Full privacy.</p>
+</div>
+<div class="glass rounded-2xl p-8 card-3d">
+<div class="w-14 h-14 rounded-2xl bg-blue-500/20 flex items-center justify-center mb-4">
+<span class="material-symbols-outlined text-3xl text-blue-400">account_tree</span>
+</div>
+<h3 class="text-xl font-semibold mb-3">Workflow Automation</h3>
+<p class="text-gray-400">Build playbooks, automate tasks, chain agents.</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Architecture -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-12">
+<h2 class="text-4xl font-bold mb-4">Technical <span class="text-gradient">Architecture</span></h2>
+</div>
+<div class="flex flex-wrap justify-center items-center gap-8">
+<img src="./assets/OLLAMA.png" alt="Ollama" class="h-14 w-auto opacity-60" />
+<img src="./assets/LUX_CLAUDE.png" alt="Claude Code" class="h-14 w-auto opacity-60" />
+<img src="./assets/LUX_MANUS.png" alt="Manus" class="h-14 w-auto opacity-60" />
+<img src="./assets/logo_2.png" alt="Lux AI Studio" class="h-14 w-auto opacity-60" />
+</div>
+</div>
+</section>
+
+<!-- Reviews -->
+<section class="px-6 py-20">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-12">
+<h2 class="text-4xl font-bold mb-4">What Developers <span class="text-gradient">Say</span></h2>
+</div>
+<div class="flex gap-6 overflow-x-auto pb-4 scrollbar-hide" id="reviews-container">
+<div class="min-w-[320px] glass rounded-2xl p-6 flex-shrink-0">
+<p class="text-gray-300 italic mb-4">"Finally a local-first AI stack that keeps my code private. Claude Code + Manus is a game changer."</p>
+<p class="text-orange-400 font-medium">— Solo Developer</p>
+</div>
+<div class="min-w-[320px] glass rounded-2xl p-6 flex-shrink-0">
+<p class="text-gray-300 italic mb-4">"We run Lux AI Studio on air-gapped systems. The workflow automation saved us weeks."</p>
+<p class="text-green-400 font-medium">— Enterprise CTO</p>
+</div>
+<div class="min-w-[320px] glass rounded-2xl p-6 flex-shrink-0">
+<p class="text-gray-300 italic mb-4">"HyperFrames + LuxTube = infinite content. Best local video stack."</p>
+<p class="text-blue-400 font-medium">— Content Creator</p>
+</div>
+<div class="min-w-[320px] glass rounded-2xl p-6 flex-shrink-0">
+<p class="text-gray-300 italic mb-4">"Ollama integration means I can run 70B models locally. The stack just works."</p>
+<p class="text-orange-400 font-medium">— ML Engineer</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="px-6 py-20">
+<div class="max-w-4xl mx-auto text-center">
+<div class="glass rounded-3xl p-12 relative overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-r from-orange-500/10 via-transparent to-green-500/10"></div>
+<div class="relative">
+<span class="material-symbols-outlined text-6xl text-orange-400 mb-4">rocket_launch</span>
+<h2 class="text-4xl font-bold mb-4">Ready to go <span class="text-gradient">local?</span></h2>
+<p class="text-gray-300 mb-8 max-w-lg mx-auto">Join 10,000+ developers building sovereign AI. Download the stack and start in minutes.</p>
+<button class="btn-glow px-10 py-4 rounded-2xl font-semibold text-lg inline-flex items-center gap-2">
+<span class="material-symbols-outlined">download</span>
+Download Lux Studio
+</button>
+<p class="mt-4 text-sm text-gray-500">macOS • Windows • Linux</p>
+</div>
+</div>
+</div>
+</section>
+
+</main>
+
+<script>
+(function() {
+    const container = document.getElementById('reviews-container');
+    if (!container) return;
+    let scrollAmount = 0;
+    const speed = 0.5;
+    function autoScroll() {
+        scrollAmount += speed;
+        if (scrollAmount >= container.scrollWidth - container.clientWidth) scrollAmount = 0;
+        container.scrollLeft = scrollAmount;
+        requestAnimationFrame(autoScroll);
+    }
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => { if (entry.isIntersecting) { autoScroll(); observer.disconnect(); } });
+    }, { threshold: 0.5 });
+    observer.observe(container);
+})();
+</script>
+
+<footer class="border-t border-white/10 py-12 px-6">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<img src="./assets/logo_2.png" alt="Lux" class="h-8 w-auto" />
+<span class="font-semibold">LUX AI STUDIO</span>
+</div>
+<div class="text-center md:text-right">
+<p class="text-sm text-gray-500">Developed by <span class="text-orange-400 font-semibold">Lux Automaton</span></p>
+</div>
+<div class="flex gap-6 text-sm text-gray-500">
+<a href="docs.html" class="hover:text-white transition-colors">Documentation</a>
+<a href="#" class="hover:text-white transition-colors">GitHub</a>
+</div>
+<p class="text-sm text-gray-600">© 2024 Lux AI Studio</p>
+</div>
+</footer>
+
 </body>
 </html>

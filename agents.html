@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Agents - Lux AI Studio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Sora:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+    * { font-family: 'DM Sans', sans-serif; }
+    h1, h2, h3, h4, h5, h6 { font-family: 'Sora', sans-serif; }
+    body { background: #0a0a0b; }
+    .bg-image { position: fixed; inset: 0; background-image: url('assets/background.png'); background-size: cover; background-position: center; z-index: -1; }
+    .bg-overlay { position: fixed; inset: 0; background: linear-gradient(180deg, rgba(10,10,11,0.6) 0%, rgba(10,10,11,0.85) 100%); pointer-events: none; z-index: 0; }
+    main, header, footer { position: relative; z-index: 1; }
+    .glass { background: rgba(255,255,255,0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+    .glass:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,107,0,0.2); }
+    .btn-glow { background: linear-gradient(135deg, #ff6b00 0%, #ff8c00 100%); box-shadow: 0 4px 20px rgba(255,107,0,0.3); transition: all 0.3s ease; }
+    .btn-glow:hover { box-shadow: 0 6px 30px rgba(255,107,0,0.5); transform: translateY(-2px); }
+    .text-gradient { background: linear-gradient(135deg, #ff6b00 0%, #ffb347 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .card-3d { transform: perspective(1000px); transition: all 0.4s ease; }
+    .card-3d:hover { transform: translateY(-8px) rotateX(2deg); }
+</style>
+</head>
+<body class="text-white antialiased min-h-screen flex flex-col overflow-x-hidden">
+<div class="bg-image"></div>
+<div class="bg-overlay"></div>
+
+<header class="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-2xl border-b border-white/5">
+<div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+<a href="/" class="flex items-center gap-3 group">
+<img src="./assets/logo_2.png" alt="Lux" class="h-9 w-auto" />
+<span class="text-lg font-semibold tracking-tight">LUX AI STUDIO</span>
+</a>
+<nav class="hidden md:flex gap-8">
+<a href="features.html" class="text-sm text-gray-400 hover:text-white transition-colors">Features</a>
+<a href="agents.html" class="text-sm text-orange-400 font-medium">Agents</a>
+<a href="stack.html" class="text-sm text-gray-400 hover:text-white transition-colors">Stack</a>
+<a href="usecases.html" class="text-sm text-gray-400 hover:text-white transition-colors">Use Cases</a>
+<a href="download.html" class="text-sm text-gray-400 hover:text-white transition-colors">Download</a>
+<a href="docs.html" class="text-sm text-gray-400 hover:text-white transition-colors">Docs</a>
+</nav>
+<button class="btn-glow px-6 py-2.5 rounded-full text-sm font-semibold flex items-center gap-2">
+<span class="material-symbols-outlined text-lg">download</span>
+Download
+</button>
+</div>
+</header>
+
+<main class="flex-grow pt-32 px-6">
+<div class="max-w-6xl mx-auto">
+<div class="text-center mb-16">
+<h1 class="text-5xl font-bold mb-4">AI <span class="text-gradient">Agents</span></h1>
+<p class="text-xl text-gray-300 max-w-2xl mx-auto">Developed by <strong class="text-orange-400">Lux Automaton</strong>. Four specialized agents working together. Powered by local AI, running on your machine.</p>
+</div>
+
+<div class="space-y-8 mb-20">
+<div class="glass rounded-3xl p-8 card-3d">
+<div class="flex flex-col lg:flex-row gap-8">
+<div class="lg:w-1/3">
+<div class="aspect-video rounded-2xl overflow-hidden bg-black/40 mb-4">
+<img src="./assets/Manus.png" alt="Manus" class="w-full h-full object-cover" />
+</div>
+<h3 class="text-2xl font-bold mb-2">Manus</h3>
+<p class="text-orange-400 font-medium">Autonomous Research Agent</p>
+</div>
+<div class="lg:w-2/3">
+<p class="text-gray-300 mb-4">The high-level agent engine for multi-step task planning and execution. Manus can autonomously research, plan, and execute complex workflows.</p>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-black/30 rounded-xl p-4">
+<h4 class="font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-400">search</span>
+Research
+</h4>
+<p class="text-sm text-gray-400">Web crawling, data analysis, and summarization</p>
+</div>
+<div class="bg-black/30 rounded-xl p-4">
+<h4 class="font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-orange-400">task_alt</span>
+Automation
+</h4>
+<p class="text-sm text-gray-400">Multi-step task execution with progress tracking</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="glass rounded-3xl p-8 card-3d">
+<div class="flex flex-col lg:flex-row gap-8">
+<div class="lg:w-1/3">
+<div class="aspect-video rounded-2xl overflow-hidden bg-black/40 mb-4">
+<img src="./assets/Claude Code.png" alt="Claude Code" class="w-full h-full object-cover" />
+</div>
+<h3 class="text-2xl font-bold mb-2">Claude Code</h3>
+<p class="text-green-400 font-medium">Private Coding Copilot</p>
+</div>
+<div class="lg:w-2/3">
+<p class="text-gray-300 mb-4">Your private coding assistant. Write, review, refactor, and debug code without sending it to the cloud. Full context awareness of your projects.</p>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-black/30 rounded-xl p-4">
+<h4 class="font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-green-400">edit_note</span>
+Code Generation
+</h4>
+<p class="text-sm text-gray-400">Write production-quality code with context awareness</p>
+</div>
+<div class="bg-black/30 rounded-xl p-4">
+<h4 class="font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-green-400">bug_report</span>
+Debug & Refactor
+</h4>
+<p class="text-sm text-gray-400">Find bugs, optimize performance, improve code quality</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="glass rounded-3xl p-8 card-3d">
+<div class="flex flex-col lg:flex-row gap-8">
+<div class="lg:w-1/3">
+<div class="aspect-video rounded-2xl overflow-hidden bg-black/40 mb-4">
+<img src="./assets/Cowork.png" alt="CoWork" class="w-full h-full object-cover" />
+</div>
+<h3 class="text-2xl font-bold mb-2">CoWork</h3>
+<p class="text-blue-400 font-medium">Collaborative Workspace</p>
+</div>
+<div class="lg:w-2/3">
+<p class="text-gray-300 mb-4">Multi-agent coordination and team collaboration space. Build workflows, manage approvals, and work together with AI agents.</p>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-black/30 rounded-xl p-4">
+<h4 class="font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-400">group_work</span>
+Multi-Agent Coordination
+</h4>
+<p class="text-sm text-gray-400">Orchestrate multiple agents working on tasks</p>
+</div>
+<div class="bg-black/30 rounded-xl p-4">
+<h4 class="font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-blue-400">approval</span>
+Approval Workflows
+</h4>
+<p class="text-sm text-gray-400">Build approval chains for critical operations</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="glass rounded-3xl p-8 card-3d">
+<div class="flex flex-col lg:flex-row gap-8">
+<div class="lg:w-1/3">
+<div class="aspect-video rounded-2xl overflow-hidden bg-black/40 mb-4">
+<img src="./assets/Hermes.png" alt="Hermes" class="w-full h-full object-cover" />
+</div>
+<h3 class="text-2xl font-bold mb-2">Hermes</h3>
+<p class="text-purple-400 font-medium">Agentic Chat Interface</p>
+</div>
+<div class="lg:w-2/3">
+<p class="text-gray-300 mb-4">A specialized web UI for agentic experimentation and chat. Connect with agents, manage conversations, and monitor execution.</p>
+<div class="grid md:grid-cols-2 gap-4">
+<div class="bg-black/30 rounded-xl p-4">
+<h4 class="font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-purple-400">chat</span>
+Chat Interface
+</h4>
+<p class="text-sm text-gray-400">Interactive conversations with AI agents</p>
+</div>
+<div class="bg-black/30 rounded-xl p-4">
+<h4 class="font-semibold mb-2 flex items-center gap-2">
+<span class="material-symbols-outlined text-purple-400">monitor_heart</span>
+Execution Monitoring
+</h4>
+<p class="text-sm text-gray-400">Real-time task progress and agent status</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="glass rounded-3xl p-10 mb-20">
+<h2 class="text-3xl font-bold mb-6 text-center">Switch Models Instantly</h2>
+<p class="text-gray-400 text-center mb-8">All Lux apps are synchronized. Change the brain of the system from one place.</p>
+<div class="grid md:grid-cols-3 gap-6">
+<div class="bg-black/40 rounded-2xl p-6 text-center">
+<h3 class="text-xl font-bold mb-2">Gemma 4</h3>
+<p class="text-orange-400 text-sm mb-3">Recommended</p>
+<p class="text-gray-400 text-sm">Heavy coding and complex logic</p>
+</div>
+<div class="bg-black/40 rounded-2xl p-6 text-center">
+<h3 class="text-xl font-bold mb-2">Qwen 2.5</h3>
+<p class="text-green-400 text-sm mb-3">Fast & Creative</p>
+<p class="text-gray-400 text-sm">Creative tasks and quick responses</p>
+</div>
+<div class="bg-black/40 rounded-2xl p-6 text-center">
+<h3 class="text-xl font-bold mb-2">Llama 3</h3>
+<p class="text-blue-400 text-sm mb-3">Versatile</p>
+<p class="text-gray-400 text-sm">Balanced performance</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+
+<footer class="border-t border-white/10 py-12 px-6 mt-20">
+<div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<img src="./assets/logo_2.png" alt="Lux" class="h-8 w-auto" />
+<span class="font-semibold">LUX AI STUDIO</span>
+</div>
+<div class="text-center md:text-right">
+<p class="text-sm text-gray-500">Developed by <span class="text-orange-400 font-semibold">Lux Automaton</span></p>
+</div>
+<div class="flex gap-6 text-sm text-gray-500">
+<a href="docs.html" class="hover:text-white transition-colors">Documentation</a>
+<a href="#" class="hover:text-white transition-colors">GitHub</a>
+</div>
+<p class="text-sm text-gray-600">© 2024 Lux AI Studio</p>
+</div>
+</footer>
+</body>
+</html>
