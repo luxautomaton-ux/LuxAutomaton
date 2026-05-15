@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lux Manus</title>
+    <link rel="stylesheet" href="{{ url_for('static', path='/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="/static/brand/lux-manus-logo.png" alt="Lux Manus" style="width:48px;height:48px;border-radius:10px;border:1px solid #2a2a2a;vertical-align:middle;margin-right:8px;">
+            <h1>Lux Manus</h1>
+            <p class="subtitle">Autonomous AI Agent - Web Interface</p>
+        </header>
+
+        <main>
+            <div class="workspace">
+                <div class="log-container">
+                    <h2>Processing Progress</h2>
+
+                    <div class="thinking-header">
+                        <h3>AI Thinking Process</h3>
+                    </div>
+                    <div id="thinking-steps" class="thinking-steps"></div>
+
+                    <div id="system-logs" class="system-logs">
+                        <div class="logs-header">
+                            <h3>System Logs</h3>
+                            <div class="logs-controls">
+                                <button id="toggle-logs" class="toggle-btn">Expand/Collapse</button>
+                                <button id="clear-logs" class="clear-btn">Clear</button>
+                            </div>
+                        </div>
+                        <div id="logs-content" class="logs-content"></div>
+                    </div>
+
+                    <div id="generated-files" class="generated-files">
+                        <div class="files-header">
+                            <h3>Generated Files</h3>
+                            <p class="files-info">Click filename to view content</p>
+                        </div>
+                        <div id="files-list" class="files-list"></div>
+                    </div>
+                </div>
+
+                <div class="chat-container">
+                    <h2>Chat</h2>
+                    <div id="chat-messages" class="chat-messages"></div>
+
+                    <div class="input-area">
+                        <textarea id="user-input" placeholder="Enter your question or command..." rows="3"></textarea>
+                        <div class="button-area">
+                            <button id="send-btn" class="primary-btn">Send</button>
+                            <button id="stop-btn" class="stop-btn">Stop</button>
+                            <button id="clear-btn" class="secondary-btn">Clear</button>
+                        </div>
+                    </div>
+
+                    <div id="file-viewer" class="file-viewer">
+                        <div class="file-viewer-header">
+                            <h3 id="file-viewer-title">File Content</h3>
+                            <button id="close-file-viewer" class="close-btn">x</button>
+                        </div>
+                        <pre id="file-content" class="file-content"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div id="status-indicator" class="status-indicator"></div>
+        </main>
+
+        <div class="section">
+            <h2>System Logs</h2>
+            <div class="log-list">
+                <div class="log-header">
+                    <span>Filename</span>
+                    <span>Last Modified</span>
+                    <span>Size</span>
+                    <span>Actions</span>
+                </div>
+                <div id="logContent" class="log-content"></div>
+            </div>
+        </div>
+
+        <div class="section" id="execution-status-section">
+            <h2>Execution Status</h2>
+            <div class="execution-status">
+                <div class="status-header">
+                    <h3 id="log-title">No log file selected</h3>
+                    <div class="status-badge" id="status-badge">Unknown</div>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar-wrapper">
+                        <div class="progress-bar" id="execution-progress-bar"></div>
+                    </div>
+                    <div class="progress-text" id="progress-text">0%</div>
+                </div>
+
+                <div class="execution-details">
+                    <div class="detail-item">
+                        <span class="detail-label">Plan ID:</span>
+                        <span class="detail-value" id="plan-id">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Current Step:</span>
+                        <span class="detail-value" id="current-step">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Completed Steps:</span>
+                        <span class="detail-value" id="completed-steps">-</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">Total Steps:</span>
+                        <span class="detail-value" id="total-steps">-</span>
+                    </div>
+                </div>
+
+                <div class="steps-container">
+                    <h4>Execution Steps</h4>
+                    <div class="steps-list" id="steps-list"></div>
+                </div>
+
+                <div class="tools-container">
+                    <h4>Tool Usage</h4>
+                    <div class="tools-list" id="tools-list"></div>
+                </div>
+
+                <div class="errors-warnings-container">
+                    <div class="errors-container">
+                        <h4>Errors (<span id="errors-count">0</span>)</h4>
+                        <div class="errors-list" id="errors-list"></div>
+                    </div>
+                    <div class="warnings-container">
+                        <h4>Warnings (<span id="warnings-count">0</span>)</h4>
+                        <div class="warnings-list" id="warnings-list"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Powered by Lux Manus - <a href="https://github.com/mannaandpoem/OpenManus" target="_blank">GitHub</a></p>
+        </footer>
+    </div>
+
+    <!-- <div class="system-logs-panel" id="systemLogsPanel">
+        <h3>System Logs</h3>
+        <div class="system-logs-container" id="systemLogsContainer">
+            <p class="log-line">Waiting for logs...</p>
+        </div>
+    </div> -->
+
+    <script src="{{ url_for('static', path='/script.js') }}"></script>
+    <script>
+        // Add log loading feature
+        async function loadSystemLogs() {
+            try {
+                const response = await fetch('/api/logs');
+                const logs = await response.json();
+
+                const logContent = document.getElementById('logContent');
+                logContent.innerHTML = '';
+
+                logs.logs.forEach(log => {
+                    const logEntry = document.createElement('div');
+                    logEntry.className = 'log-entry';
+                    logEntry.innerHTML = `
+                        <span>${log.name}</span>
+                        <span>${new Date(log.modified * 1000).toLocaleString()}</span>
+                        <span>${(log.size/1024).toFixed(2)} KB</span>
+                        <span class="log-actions">
+                            <button class="view-log-btn" data-log="${log.name}">View Content</button>
+                            <button class="view-status-btn" data-log="${log.name}">View Status</button>
+                        </span>
+                    `;
+                    logContent.appendChild(logEntry);
+                });
+
+                // Add view log content button events
+                document.querySelectorAll('.view-log-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const logName = e.target.getAttribute('data-log');
+                        loadLogContent(logName);
+                    });
+                });
+
+                // Add view execution status button events
+                document.querySelectorAll('.view-status-btn').forEach(btn => {
+                    btn.addEventListener('click', (e) => {
+                        const logName = e.target.getAttribute('data-log');
+                        loadLogExecutionStatus(logName);
+                    });
+                });
+            } catch (error) {
+                console.error('Error loading logs:', error);
+            }
+        }
+
+        async function loadLogContent(logName) {
+            try {
+                const response = await fetch(`/api/logs/${logName}`);
+                const logData = await response.json();
+                // Display log content in terminal area
+                if (document.getElementById('terminalOutput')) {
+                    document.getElementById('terminalOutput').textContent = logData.content;
+                } else {
+                    // Create a modal to display log content
+                    const modal = document.createElement('div');
+                    modal.className = 'modal';
+                    modal.innerHTML = `
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h3>Log Content: ${logName}</h3>
+                                <span class="close-modal">&times;</span>
+                            </div>
+                            <div class="modal-body">
+                                <pre>${logData.content}</pre>
+                            </div>
+                        </div>
+                    `;
+                    document.body.appendChild(modal);
+
+                    // Add close button event
+                    modal.querySelector('.close-modal').addEventListener('click', () => {
+                        document.body.removeChild(modal);
+                    });
+
+                    // Close when clicking outside modal
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            document.body.removeChild(modal);
+                        }
+                    });
+                }
+            } catch (error) {
+                console.error('Error loading log content:', error);
+            }
+        }
+
+        async function loadLogExecutionStatus(logName) {
+            try {
+                // Show execution status section
+                document.getElementById('execution-status-section').style.display = 'block';
+
+                // Fetch parsed log data
+                const response = await fetch(`/api/logs_parsed/${logName}`);
+                const logInfo = await response.json();
+
+                // Update title and status
+                document.getElementById('log-title').textContent = `Log: ${logName}`;
+
+                // Update status badge
+                const statusBadge = document.getElementById('status-badge');
+                statusBadge.textContent = getStatusText(logInfo.status);
+                statusBadge.className = `status-badge status-${logInfo.status}`;
+
+                // Update progress bar
+                const progressBar = document.getElementById('execution-progress-bar');
+                const progressText = document.getElementById('progress-text');
+                const percentage = logInfo.progress_percentage || 0;
+                progressBar.style.width = `${percentage}%`;
+                progressText.textContent = `${percentage}%`;
+
+                // Update detail fields
+                document.getElementById('plan-id').textContent = logInfo.plan_id || '-';
+                document.getElementById('current-step').textContent = logInfo.current_step || '-';
+                document.getElementById('completed-steps').textContent = logInfo.completed_steps || '0';
+                document.getElementById('total-steps').textContent = logInfo.total_steps || '0';
+
+                // Update steps list
+                const stepsList = document.getElementById('steps-list');
+                stepsList.innerHTML = '';
+
+                if (logInfo.steps && logInfo.steps.length > 0) {
+                    logInfo.steps.forEach((step, index) => {
+                        const status = logInfo.step_statuses && logInfo.step_statuses[index]
+                            ? logInfo.step_statuses[index]
+                            : 'not_started';
+
+                        const stepItem = document.createElement('div');
+                        stepItem.className = `step-item step-${status}`;
+
+                        let statusIcon = '⬜';
+                        if (status === 'completed') statusIcon = '✅';
+                        else if (status === 'in_progress') statusIcon = '🔄';
+                        else if (status === 'blocked') statusIcon = '⚠️';
+
+                        stepItem.innerHTML = `
+                            <span class="step-status">${statusIcon}</span>
+                            <span class="step-number">${index}.</span>
+                            <span class="step-text">${step}</span>
+                        `;
+
+                        stepsList.appendChild(stepItem);
+                    });
+                } else {
+                    stepsList.innerHTML = '<div class="no-steps">No step information</div>';
+                }
+
+                // Update tool usage list
+                const toolsList = document.getElementById('tools-list');
+                toolsList.innerHTML = '';
+
+                if (logInfo.tool_executions && logInfo.tool_executions.length > 0) {
+                    logInfo.tool_executions.forEach(tool => {
+                        const toolItem = document.createElement('div');
+                        toolItem.className = 'tool-item';
+
+                        if (tool.tool) {
+                            toolItem.innerHTML = `
+                                <span class="tool-icon">🔧</span>
+                                <span class="tool-name">${tool.tool}</span>
+                            `;
+                        } else if (tool.action) {
+                            toolItem.innerHTML = `
+                                <span class="tool-icon">🔄</span>
+                                <span class="tool-action">${tool.action}</span>
+                            `;
+                        }
+
+                        toolsList.appendChild(toolItem);
+                    });
+                } else {
+                    toolsList.innerHTML = '<div class="no-tools">No tool usage records</div>';
+                }
+
+                // Update errors list
+                const errorsList = document.getElementById('errors-list');
+                errorsList.innerHTML = '';
+                document.getElementById('errors-count').textContent = logInfo.errors ? logInfo.errors.length : '0';
+
+                if (logInfo.errors && logInfo.errors.length > 0) {
+                    logInfo.errors.forEach(error => {
+                        const errorItem = document.createElement('div');
+                        errorItem.className = 'error-item';
+                        errorItem.innerHTML = `
+                            <span class="error-icon">❌</span>
+                            <span class="error-message">${error.message}</span>
+                        `;
+                        errorsList.appendChild(errorItem);
+                    });
+                } else {
+                    errorsList.innerHTML = '<div class="no-errors">No errors</div>';
+                }
+
+                // Update warnings list
+                const warningsList = document.getElementById('warnings-list');
+                warningsList.innerHTML = '';
+                document.getElementById('warnings-count').textContent = logInfo.warnings ? logInfo.warnings.length : '0';
+
+                if (logInfo.warnings && logInfo.warnings.length > 0) {
+                    logInfo.warnings.forEach(warning => {
+                        const warningItem = document.createElement('div');
+                        warningItem.className = 'warning-item';
+                        warningItem.innerHTML = `
+                            <span class="warning-icon">⚠️</span>
+                            <span class="warning-message">${warning.message}</span>
+                        `;
+                        warningsList.appendChild(warningItem);
+                    });
+                } else {
+                    warningsList.innerHTML = '<div class="no-warnings">No warnings</div>';
+                }
+
+                // Scroll to execution status section
+                document.getElementById('execution-status-section').scrollIntoView({ behavior: 'smooth' });
+
+            } catch (error) {
+                console.error('Error loading execution status:', error);
+            }
+        }
+
+        // Resolve status text
+        function getStatusText(status) {
+            switch(status) {
+                case 'completed': return 'Completed';
+                case 'in_progress': return 'In Progress';
+                case 'error': return 'Error';
+                case 'stopped': return 'Stopped';
+                default: return 'Unknown';
+            }
+        }
+
+        // Load logs after page initialization
+        loadSystemLogs();
+
+        // Hide execution status section by default
+        document.addEventListener('DOMContentLoaded', function() {
+            const statusSection = document.getElementById('execution-status-section');
+            if (statusSection) {
+                statusSection.style.display = 'none';
+            }
+        });
+
+        // Handle system log updates in WebSocket section
+        const connectWebSocket = (sessionId) => {
+            // ...existing code...
+
+            // Track the latest system log message element
+            let lastSystemLogMessage = null;
+            let lastSystemLogTimestamp = 0;
+
+            socket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+
+                // Process system log updates in the logs panel
+                if (data.system_logs && data.system_logs.length > 0) {
+                    const systemLogsContainer = document.getElementById('systemLogsContainer');
+                    if (systemLogsContainer) {
+                        // Clear the initial waiting message
+                        if (systemLogsContainer.querySelector('p').textContent === 'Waiting for logs...') {
+                            systemLogsContainer.innerHTML = '';
+                        }
+
+                        // Append new logs
+                        data.system_logs.forEach(log => {
+                            const logLine = document.createElement('p');
+                            logLine.className = 'log-line';
+                            logLine.textContent = log;
+                            systemLogsContainer.appendChild(logLine);
+                        });
+
+                        // Scroll to bottom
+                        systemLogsContainer.scrollTop = systemLogsContainer.scrollHeight;
+                    }
+
+                    // Add system logs to chat window
+                    const chatMessages = document.getElementById('chat-messages');
+                    if (chatMessages) {
+                        const now = Date.now();
+                        // Merge logs if last update was within 5 seconds
+                        if (lastSystemLogMessage &&
+                            lastSystemLogMessage.parentNode === chatMessages &&
+                            now - lastSystemLogTimestamp < 5000) {
+
+                            // Get existing log content element
+                            const logContent = lastSystemLogMessage.querySelector('.system-log-content');
+                            if (logContent) {
+                                // Append new log lines
+                                logContent.textContent += '\n' + data.system_logs.join('\n');
+
+                                // Update timestamp
+                                lastSystemLogTimestamp = now;
+
+                                // Scroll to bottom
+                                chatMessages.scrollTop = chatMessages.scrollHeight;
+                                return;
+                            }
+                        }
+
+                        // Create a new OpenManus response message
+                        const messageDiv = document.createElement('div');
+                        messageDiv.className = 'message system-message';
+
+                        // Create message header
+                        const messageHeader = document.createElement('div');
+                        messageHeader.className = 'message-header';
+                        messageHeader.innerHTML = '<span class="avatar system">🤖</span><span class="sender">OpenManus</span>';
+
+                        // Create message body
+                        const messageContent = document.createElement('div');
+                        messageContent.className = 'message-content log-message';
+
+                        // Add log content
+                        const logContent = document.createElement('pre');
+                        logContent.className = 'system-log-content';
+                        logContent.textContent = data.system_logs.join('\n');
+
+                        // Assemble message
+                        messageContent.appendChild(logContent);
+                        messageDiv.appendChild(messageHeader);
+                        messageDiv.appendChild(messageContent);
+
+                        // Append to chat window
+                        chatMessages.appendChild(messageDiv);
+
+                        // Update latest log message reference and timestamp
+                        lastSystemLogMessage = messageDiv;
+                        lastSystemLogTimestamp = now;
+
+                        // Scroll to bottom
+                        chatMessages.scrollTop = chatMessages.scrollHeight;
+                    }
+                }
+
+                // ...existing code...
+            };
+            // ...existing code...
+        };
+    </script>
+
+    <style>
+        .system-logs-panel {
+            margin-top: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .system-logs-container {
+            height: 300px;
+            overflow-y: auto;
+            background-color: #1e1e1e;
+            color: #ddd;
+            font-family: monospace;
+            padding: 10px;
+            border-radius: 4px;
+        }
+
+        .log-line {
+            margin: 0;
+            padding: 2px 0;
+            font-size: 14px;
+            white-space: pre-wrap;
+        }
+
+        /* System log styling in chat window */
+        .system-message .message-content {
+            background-color: #f1f8ff;
+            border-left: 4px solid #0366d6;
+        }
+
+        .system-log-content {
+            margin: 0;
+            padding: 8px;
+            font-family: monospace;
+            font-size: 14px;
+            white-space: pre-wrap;
+            color: #333;
+            background-color: #f8f8f8;
+            border-radius: 4px;
+            overflow: auto;
+            max-height: 300px;
+        }
+    </style>
+</body>
+</html>

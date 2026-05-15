@@ -1,0 +1,3 @@
+[submodule "plugins/starter"]
+	path = plugins/starter
+	url = https://github.com/lux-automaton/LuxCLI-plugin-starter.git

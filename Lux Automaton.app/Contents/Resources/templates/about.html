@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Lux AI Studio - Developed by Lux Automaton</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/static/brand/logo.png">
+    <style>
+        :root {
+            --primary: #f97316;
+            --bg: #030303;
+            --surface: #111111;
+            --line: rgba(255, 255, 255, 0.1);
+            --text: #f5f5f5;
+            --muted: #a3a3a3;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            line-height: 1.7;
+            padding: 60px 20px;
+        }
+
+        .shell { max-width: 900px; margin: 0 auto; }
+
+        .brand-row {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            border: 1px solid var(--line);
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 999px;
+            padding: 8px 14px;
+            margin-bottom: 20px;
+        }
+
+        .brand-row img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            border-radius: 8px;
+            background: #0d0d0d;
+            padding: 3px;
+            border: 1px solid var(--line);
+        }
+
+        .brand-row span {
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            font-weight: 700;
+        }
+
+        header { margin-bottom: 80px; text-align: center; }
+        h1 { font-size: 4rem; font-weight: 900; letter-spacing: -0.04em; margin-bottom: 20px; }
+        .hero-tag { color: var(--primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; margin-bottom: 10px; display: block; }
+
+        h2 { font-size: 2rem; font-weight: 800; margin: 60px 0 30px; color: var(--primary); }
+        p { margin-bottom: 24px; font-size: 1.1rem; color: #d4d4d4; }
+
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin: 40px 0; }
+        .feature-item { background: var(--surface); border: 1px solid var(--line); padding: 30px; border-radius: 20px; }
+        .feature-item h3 { font-size: 1.25rem; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
+        .feature-item p { font-size: 0.95rem; margin-bottom: 0; }
+
+        .philosophy-box { background: linear-gradient(135deg, #111 0%, #000 100%); border-left: 4px solid var(--primary); padding: 40px; margin: 60px 0; border-radius: 0 20px 20px 0; }
+
+        .back-btn { display: inline-block; margin-bottom: 40px; color: var(--muted); text-decoration: none; font-weight: 600; font-size: 0.9rem; }
+        .back-btn:hover { color: var(--primary); }
+    </style>
+</head>
+<body>
+    <div class="shell">
+        <a href="/dashboard" class="back-btn">← Back to Hub</a>
+        <header>
+            <div class="brand-row">
+                <img src="/static/brand/logo.png" onerror="this.src='/static/brand/lux-ai.png'" alt="Lux AI Studio logo">
+                <span>Lux AI Studio</span>
+            </div>
+            <span class="hero-tag">The Lux Manifesto</span>
+            <h1>Why Lux?</h1>
+            <p>Lux AI Studio, developed by Lux Automaton, is not just a toolset; it is a philosophical shift toward sovereign, local-first intelligence.</p>
+        </header>
+
+        <section>
+            <h2>The Core Mission</h2>
+            <p>
+                In an era of centralized AI, Lux AI Studio returns power to the individual. Developed by Lux Automaton, it keeps your agents, your data, and your digital twin on hardware you own, controlled by keys you hold.
+            </p>
+            <div class="philosophy-box">
+                <h3>"Intelligence should be a utility you own, not a service you rent."</h3>
+            </div>
+        </section>
+
+        <section>
+            <h2>Capabilities & Functions</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>🎬 Media Engine</h3>
+                    <p>Built-in integration with Hyperframes and LuxTube for automated video production, viral scanning, and thumbnail generation.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>💻 Engineering OS</h3>
+                    <p>Deep architectural awareness via Lux Claude Code. Refactor entire codebases with agents that understand your local project structure.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔍 Agentic Research</h3>
+                    <p>Lux Manus autonomously navigates the web, extracts data, and produces structured reports without manual intervention.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🛡️ Privacy First</h3>
+                    <p>Native routing for Ollama and local models like Gemma 4. Run state-of-the-art inference with zero data leakage.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🤖 Autonomous Growth</h3>
+                    <p>Hermes OS uses scan-driven presets to automate business operations, lead generation, and morning intelligence briefings.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>🔗 Mesh Networking</h3>
+                    <p>LUX Link allows you to harness remote VPS power while keeping your data and memory securely on your local device.</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2>The Technology Stack</h2>
+            <p>
+                Lux AI Studio is built on a modular, API-first architecture. Every component (Manus, CoWork, Claude Code) communicates via a central local hub, allowing for cross-tool synergy that single-app solutions cannot match.
+            </p>
+            <p>
+                Whether you are a <strong>Founder</strong> needing a 24/7 research team, a <strong>Developer</strong> needing a high-speed coding partner, or a <strong>Creator</strong> scaling a media empire, Lux AI Studio provides the operating layer for the next decade of work, with Lux Automaton as the development team behind it.
+            </p>
+        </section>
+
+        <footer style="margin-top: 100px; text-align: center; border-top: 1px solid var(--line); padding-top: 40px;">
+            <p style="font-size: 0.9rem; color: var(--muted);">&copy; 2026 Lux AI Studio. Developed by Lux Automaton.</p>
+        </footer>
+    </div>
+</body>
+</html>

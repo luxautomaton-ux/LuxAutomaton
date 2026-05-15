@@ -1,0 +1,27 @@
+{
+  "enabled": true,
+  "status": "idle",
+  "last_run": "2026-05-14T13:00:13.102222Z",
+  "next_run": null,
+  "current_job": null,
+  "history": [
+    {
+      "date": "2026-05-14T13:00:13.102158Z",
+      "title": "[BLOCKED] How AI Content is changing in 2026",
+      "url": null,
+      "status": "failed"
+    },
+    {
+      "date": "2026-05-12T22:22:53.823806Z",
+      "title": "How AI Content is changing in 2026",
+      "url": "https://youtube.com/watch?v=mock_1778624573",
+      "status": "published"
+    },
+    {
+      "date": "2026-05-12T22:22:20.631340Z",
+      "title": "How AI Content is changing in 2026",
+      "url": "https://youtube.com/watch?v=mock_1778624540",
+      "status": "published"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "@lux-automaton/lux-cli",
+  "version": "1.0.0",
+  "description": "Lux CLI - Web UI for Claude Code, Cursor, Codex, Gemini CLI",
+  "bin": {
+    "luxcli": "./bin.js"
+  },
+  "scripts": {
+    "start": "node index.js"
+  }
+}

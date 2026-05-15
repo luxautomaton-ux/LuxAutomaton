@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="description" content="Lux Claude Code Terminal - Browser UI for Claude Code, Codex, and Gemini agents. Sessions sync with your terminal." />
+    <meta name="theme-color" content="#1a1a1a" />
+    <meta name="color-scheme" content="light dark" />
+    <meta property="og:title" content="Lux Claude Code Terminal" />
+    <meta property="og:description" content="Browser UI for Claude Code, Codex, and Gemini agents. Sessions sync with your terminal." />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Lux Claude Code Terminal" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Lux Claude Code Terminal" />
+    <meta name="twitter:description" content="Browser UI for Claude Code, Codex, and Gemini agents." />
+    <title>Lux Claude Code Terminal</title>
+    <link rel="icon" type="image/png" href="/lux-claude-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Fira+Code:wght@400;500;600;700&display=swap" />
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('lux-claude-theme');
+          var theme = stored === 'dark' || stored === 'light' ? stored : 'dark';
+          document.documentElement.dataset.theme = theme;
+          document.documentElement.style.colorScheme = theme;
+        } catch (_) {
+          document.documentElement.dataset.theme = 'dark';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

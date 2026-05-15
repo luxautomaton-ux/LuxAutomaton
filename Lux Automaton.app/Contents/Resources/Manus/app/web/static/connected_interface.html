@@ -1,0 +1,858 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lux Manus</title>
+    <style>
+        :root {
+            --bg: #09090b;
+            --bg-soft: #18181b;
+            --panel: rgba(24, 24, 27, 0.6);
+            --panel-2: rgba(39, 39, 42, 0.5);
+            --line: #27272a;
+            --line-strong: #3f3f46;
+            --text: #f4f4f5;
+            --muted: #a1a1aa;
+            --gold: #f97316;
+            --gold-soft: rgba(249, 115, 22, 0.15);
+            --ok: #10b981;
+            --danger: #ef4444;
+            --primary: #f97316;
+            --primary-hover: #ea580c;
+            --primary-inverse: #ffffff;
+            --shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+            --glow: 0 0 20px rgba(249, 115, 22, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: radial-gradient(circle at top, rgba(249, 115, 22, 0.08), transparent 40%), var(--bg);
+            color: var(--text);
+            /* Adds a subtle grain texture commonly found in premium dark sites */
+            background-image: radial-gradient(circle at top, rgba(249, 115, 22, 0.08), transparent 40%), url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+        }
+
+        .app-shell {
+            width: 100%;
+            height: 100%;
+            display: grid;
+            grid-template-columns: 280px 1fr 360px;
+            gap: 14px;
+            padding: 14px;
+        }
+
+        .sidebar,
+        .main,
+        .inspector {
+            background: var(--panel);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            min-height: 0;
+            box-shadow: var(--shadow), inset 0 1px 1px rgba(255, 255, 255, 0.05);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px;
+            border-bottom: 1px solid var(--line);
+            background: linear-gradient(180deg, rgba(255,255,255,0.03), transparent);
+        }
+
+        .brand-logo {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            border: 1px solid var(--line-strong);
+            object-fit: cover;
+            background: #0f0f0f;
+        }
+
+        .brand-copy {
+            display: flex;
+            flex-direction: column;
+            gap: 1px;
+        }
+
+        .brand-copy strong {
+            font-size: 0.94rem;
+            letter-spacing: 0.01em;
+            color: var(--gold);
+        }
+
+        .brand-copy span {
+            font-size: 0.76rem;
+            color: var(--muted);
+        }
+
+        .sidebar-actions {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line);
+            display: grid;
+            gap: 8px;
+        }
+
+        .btn {
+            border: 1px solid var(--line-strong);
+            background: var(--panel-2);
+            color: var(--text);
+            border-radius: 9px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            padding: 9px 11px;
+            cursor: pointer;
+            transition: 160ms ease;
+        }
+
+        .btn:hover:not(:disabled) {
+            border-color: var(--primary);
+            background: #efefec;
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--primary-inverse);
+            box-shadow: 0 4px 14px rgba(249, 115, 22, 0.25);
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            background: var(--primary-hover);
+            box-shadow: 0 6px 20px rgba(249, 115, 22, 0.3);
+            transform: translateY(-1px);
+        }
+
+        .btn-danger {
+            background: rgba(220, 38, 38, 0.1);
+            border-color: rgba(220, 38, 38, 0.2);
+            color: #f87171;
+        }
+
+        .btn-danger:hover:not(:disabled) {
+            background: rgba(220, 38, 38, 0.2);
+            border-color: rgba(220, 38, 38, 0.3);
+        }
+
+        .sidebar-section {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .section-title {
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 8px;
+        }
+
+        .session-history {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px 10px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .session-item {
+            border: 1px solid var(--line);
+            background: var(--panel-2);
+            border-radius: 9px;
+            padding: 9px;
+            cursor: pointer;
+            transition: 150ms ease;
+        }
+
+        .session-item:hover {
+            border-color: var(--line-strong);
+        }
+
+        .session-item.active {
+            border-color: var(--gold);
+            background: var(--gold-soft);
+        }
+
+        .session-title {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .session-meta {
+            margin-top: 4px;
+            font-size: 0.7rem;
+            color: var(--muted);
+        }
+
+        .main {
+            display: flex;
+            flex-direction: column;
+            min-width: 0;
+            overflow: hidden;
+        }
+
+        .main-topbar {
+            padding: 12px 14px;
+            border-bottom: 1px solid var(--line);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+            background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent);
+        }
+
+        .main-topbar h1 {
+            font-size: 1.02rem;
+            font-weight: 700;
+            color: var(--text);
+        }
+
+        .main-topbar p {
+            font-size: 0.76rem;
+            color: var(--muted);
+        }
+
+        .controls-row {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .select {
+            border: 1px solid var(--line-strong);
+            background: var(--panel-2);
+            color: var(--text);
+            border-radius: 8px;
+            padding: 7px 10px;
+            font-size: 0.76rem;
+            outline: none;
+        }
+
+        .status-pill {
+            border: 1px solid #86efac;
+            background: rgba(34,197,94,0.14);
+            color: #15803d;
+            border-radius: 999px;
+            padding: 3px 8px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-height: 0;
+        }
+
+        .message {
+            max-width: 95%;
+        }
+
+        .user-message {
+            margin-left: auto;
+        }
+
+        .message-content {
+            border: 1px solid var(--line);
+            background: var(--panel);
+            border-radius: 10px;
+            padding: 10px 12px;
+            font-size: 0.92rem;
+            line-height: 1.55;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .user-message .message-content {
+            background: var(--gold-soft);
+            border-color: var(--line-strong);
+        }
+
+        .system-message .message-content {
+            background: var(--panel-2);
+            color: var(--muted);
+            font-style: italic;
+        }
+
+        .composer {
+            border-top: 1px solid var(--line);
+            padding: 12px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            background: var(--panel);
+            border-radius: 0 0 16px 16px;
+        }
+
+        .quick-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .quick-action-btn {
+            font-size: 0.72rem;
+            padding: 6px 9px;
+            border-radius: 999px;
+            border: 1px solid var(--line-strong);
+            background: var(--panel-2);
+            color: var(--text);
+            cursor: pointer;
+        }
+
+        .quick-action-btn:hover {
+            border-color: var(--gold);
+            background: #efefec;
+        }
+
+        .upload-dropzone {
+            border: 1px dashed var(--line-strong);
+            border-radius: 10px;
+            padding: 10px;
+            background: var(--panel-2);
+            color: var(--muted);
+            font-size: 0.78rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .upload-dropzone.active {
+            border-color: var(--gold);
+            background: var(--gold-soft);
+            color: var(--text);
+        }
+
+        .attachment-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 7px;
+            min-height: 2px;
+        }
+
+        .attachment-chip {
+            border: 1px solid var(--line-strong);
+            border-radius: 999px;
+            padding: 4px 8px;
+            background: var(--panel-2);
+            font-size: 0.72rem;
+            color: var(--text);
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            max-width: 100%;
+        }
+
+        .attachment-chip img {
+            width: 18px;
+            height: 18px;
+            border-radius: 4px;
+            object-fit: cover;
+            border: 1px solid #555;
+        }
+
+        .chip-name {
+            max-width: 180px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chip-remove {
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            cursor: pointer;
+            font-size: 0.85rem;
+            line-height: 1;
+        }
+
+        .composer-row {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 8px;
+            align-items: end;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 58px;
+            max-height: 190px;
+            resize: vertical;
+            border: 1px solid var(--line-strong);
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.2);
+            color: var(--text);
+            padding: 12px 14px;
+            font-size: 0.94rem;
+            line-height: 1.45;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            outline: none;
+        }
+
+        textarea:focus {
+            border-color: var(--primary);
+            box-shadow: var(--glow);
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 130px;
+        }
+
+        .status-indicator {
+            font-size: 0.76rem;
+            color: var(--muted);
+        }
+
+        .inspector {
+            display: grid;
+            grid-template-rows: 1fr auto auto;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        .inspector-block {
+            padding: 12px;
+            border-bottom: 1px solid var(--line);
+            min-height: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .inspector-block:last-child {
+            border-bottom: none;
+        }
+
+        .inspector-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .inspector-title h2 {
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--muted);
+            margin: 0;
+        }
+
+        .record-count,
+        .refresh-info,
+        .auto-scroll {
+            font-size: 0.72rem;
+            color: var(--muted);
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+
+        .thinking-timeline,
+        .workspace-files,
+        .file-content {
+            min-height: 0;
+            overflow-y: auto;
+        }
+
+        .thinking-timeline {
+            border-left: 2px solid var(--gold);
+            padding-left: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 10px;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+
+        .timeline-item::before {
+            content: "";
+            position: absolute;
+            left: -14px;
+            top: 7px;
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: var(--line-strong);
+        }
+
+        .timeline-item.completed::before {
+            background: var(--gold);
+        }
+
+        .timeline-header {
+            font-size: 0.78rem;
+            color: var(--text);
+        }
+
+        .timeline-details {
+            display: none;
+            margin-top: 5px;
+            font-size: 0.72rem;
+            color: var(--muted);
+            border: 1px solid var(--line);
+            border-radius: 8px;
+            padding: 7px;
+            background: var(--panel-2);
+            white-space: pre-wrap;
+        }
+
+        .btn-details {
+            border: none;
+            background: transparent;
+            color: var(--gold);
+            font-size: 0.72rem;
+            cursor: pointer;
+            margin-top: 4px;
+        }
+
+        .refresh-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .workspace-item,
+        .file-item {
+            display: flex;
+            gap: 8px;
+            border: 1px solid var(--line);
+            border-radius: 9px;
+            padding: 8px;
+            margin-bottom: 6px;
+            background: var(--panel-2);
+        }
+
+        .file-item {
+            cursor: pointer;
+            margin-left: 14px;
+        }
+
+        .file-item:hover,
+        .file-item.selected {
+            border-color: var(--gold);
+            background: var(--gold-soft);
+        }
+
+        .workspace-name,
+        .file-name {
+            font-size: 0.78rem;
+            color: var(--text);
+            font-weight: 600;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .workspace-date,
+        .file-meta {
+            font-size: 0.68rem;
+            color: var(--muted);
+        }
+
+        .file-viewer {
+            display: none;
+            border-top: 1px solid var(--line);
+        }
+
+        .file-viewer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 9px 12px;
+            background: var(--panel-2);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .file-viewer-header h3 {
+            font-size: 0.76rem;
+            color: var(--muted);
+            margin: 0;
+            max-width: 240px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .btn-close {
+            border: none;
+            background: transparent;
+            color: var(--muted);
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .file-content {
+            padding: 10px 12px;
+            font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+            font-size: 0.76rem;
+            line-height: 1.45;
+            max-height: 220px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .empty-hint {
+            font-size: 0.76rem;
+            color: var(--muted);
+            border: 1px dashed var(--line-strong);
+            border-radius: 9px;
+            padding: 9px;
+            text-align: center;
+        }
+
+        footer {
+            display: none;
+        }
+
+        @media (max-width: 1300px) {
+            .app-shell {
+                grid-template-columns: 240px 1fr 320px;
+            }
+        }
+
+        @media (max-width: 1080px) {
+            .app-shell {
+                grid-template-columns: 1fr;
+                grid-template-rows: auto 1fr auto;
+                overflow-y: auto;
+            }
+
+            .sidebar,
+            .inspector {
+                min-height: 260px;
+            }
+
+            .main {
+                min-height: 60vh;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="/static/manus_modal_overlay.css">
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <button class="manus-sidebar-action-btn has-tooltip" onclick="toggleSidebarCollapse()" data-tooltip="Collapse sidebar" aria-label="Collapse sidebar">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+                </button>
+                <div class="manus-sidebar-brand-wrapper">
+                    <img src="/static/brand/lux-manus-logo.png" alt="Lux Manus Logo">
+                    <span class="manus-sidebar-brand-name">Manus</span>
+                    <span class="manus-status-dot-orange"></span>
+                </div>
+                <button class="manus-sidebar-action-btn has-tooltip" onclick="focusSidebarSearch()" data-tooltip="Search sessions" aria-label="Search sessions">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </button>
+            </div>
+
+            <div class="sidebar-actions">
+                <button id="new-chat-btn" class="btn btn-primary"><span class="manus-new-task-text">+ New Task</span></button>
+                <!-- Keep legacy buttons hidden so they are still in the DOM and don't break listeners -->
+                <button id="install-skills-btn" class="btn" style="display:none !important;">Install Skills</button>
+                <button id="add-skill-btn" class="btn" style="display:none !important;">Add Skill Repo</button>
+                <button id="open-guide-btn" class="btn" style="display:none !important;">Full Guide</button>
+            </div>
+
+            <!-- Keep selectors here to avoid breaking connected_interface.js, but styled cleanly -->
+            <div class="sidebar-section" style="display:none !important;">
+                <div class="section-title">Modes</div>
+                <div class="controls-row">
+                    <select id="mode-selector" class="select">
+                        <option value="agent" selected>Agent Mode</option>
+                        <option value="chat">Chat Mode</option>
+                    </select>
+                    <select id="model-selector" class="select">
+                        <option value="ollama" selected>Local Ollama (qwen2.5:7b)</option>
+                        <option value="opencode">Lux Claude Code Terminal</option>
+                        <option value="openai">OpenAI (GPT-4o)</option>
+                    </select>
+                    <span id="model-status" class="status-pill">Connected</span>
+                </div>
+            </div>
+
+            <div id="session-history" class="session-history"></div>
+
+            <!-- New Sidebar Footer Container -->
+            <div class="manus-sidebar-bottom-container">
+
+
+                <div class="manus-sidebar-profile-tray" onclick="openManusSettingsModal('account')">
+                    <div class="manus-profile-avatar">A</div>
+                    <div class="manus-profile-info">
+                        <span class="manus-profile-name">asaspade</span>
+                        <span class="manus-profile-status">Operator Active</span>
+                    </div>
+                    <div class="manus-profile-actions-wrapper">
+                        <button class="manus-profile-action-btn has-tooltip" onclick="event.stopPropagation(); openManusSettingsModal('skills')" data-tooltip="Skill Manager" aria-label="Skill Manager">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                        </button>
+                        <button class="manus-profile-action-btn has-tooltip" onclick="event.stopPropagation(); openManusSettingsModal('guide')" data-tooltip="Interactive Playbook" aria-label="Interactive Playbook">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+                        </button>
+                        <button class="manus-profile-action-btn has-tooltip" onclick="event.stopPropagation(); openManusSettingsModal('system')" data-tooltip="Orchestration Settings" aria-label="Orchestration Settings">
+                            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="main">
+            <div class="main-topbar-manus">
+                <div class="manus-greeting-wrapper">
+                    <div class="manus-greeting-thin">Hello</div>
+                    <h1 class="manus-greeting-bold">What can I do for you?</h1>
+                </div>
+                <div id="status-indicator" class="status-indicator"></div>
+            </div>
+
+            <div id="chat-messages" class="chat-messages"></div>
+
+            <div class="composer">
+                <div class="composer-container-pill">
+                    <textarea id="user-input" placeholder="Give Manus a task to work on...." data-i18n="input_placeholder"></textarea>
+                    
+                    <div class="composer-actions-row">
+                        <div class="composer-actions-left">
+                            <button id="manus-attachment-trigger" class="composer-circular-btn" type="button" aria-label="Attach files">
+                                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>
+                            </button>
+                            
+                            <div class="composer-nested-pill">
+                                <button id="manus-deep-learning-toggle" class="composer-nested-btn active" type="button" aria-label="Deep learning">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/><path d="M12 2v4"/><path d="M12 18v4"/><path d="M4 12H2"/><path d="M22 12h-4"/></svg>
+                                </button>
+                                <button id="manus-model-selector-trigger" class="composer-nested-btn" type="button" aria-label="Select model">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+                                </button>
+                                <button id="manus-playbook-trigger" class="composer-nested-btn" type="button" aria-label="Playbook">
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="composer-actions-right">
+                            <button id="clear-btn" class="composer-circular-btn text-btn" title="Clear chat">🗑️</button>
+                            <button id="stop-btn" class="composer-circular-btn danger-btn" disabled title="Stop task">
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="2"/></svg>
+                            </button>
+                            <button id="send-btn" class="composer-send-btn" title="Send task">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quick-actions" id="quick-actions">
+                    <button class="quick-action-btn" data-template="Create a polished design concept with layout, typography, and visual direction for:">🎨 Image</button>
+                    <button class="quick-action-btn" data-template="Create a complete slide deck with agenda, key points, and speaker notes for:">📊 Slides</button>
+                    <button class="quick-action-btn" data-template="Build a full website plan with pages, sections, copy, and implementation steps for:">💻 Webpage</button>
+                    <button class="quick-action-btn" data-template="Run deep research and produce a structured report with citations for:">📈 Visualization</button>
+                    <button class="quick-action-btn" onclick="openManusSettingsModal('guide')">📖 Playbook ↗</button>
+                    <button class="quick-action-btn" onclick="openManusSettingsModal('guide')">More</button>
+                </div>
+
+                <div id="upload-dropzone" class="upload-dropzone" style="display:none;">
+                    <span>Drop files/images/PDF here, or click Attach to upload</span>
+                    <input id="file-upload-input" type="file" multiple style="display:none;" accept=".pdf,.txt,.md,.csv,.json,.html,.css,.js,.py,.doc,.docx,.xlsx,.ppt,.pptx,.png,.jpg,.jpeg,.gif,.webp,.svg">
+                    <button id="attach-btn" class="btn" type="button">Attach Files</button>
+                </div>
+
+                <div id="attachment-list" class="attachment-list"></div>
+            </div>
+        </section>
+
+        <aside class="inspector">
+            <div class="inspector-block">
+                <div class="inspector-title">
+                    <h2 data-i18n="ai_thinking_process">AI Thinking Process</h2>
+                    <div id="record-count" class="record-count" data-i18n="records_count">0 records</div>
+                </div>
+                <div class="controls">
+                    <label class="auto-scroll">
+                        <input type="checkbox" id="auto-scroll" checked>
+                        <span data-i18n="auto_scroll">Auto Scroll</span>
+                    </label>
+                    <button id="clear-thinking" class="btn" data-i18n="clear">Clear</button>
+                </div>
+                <div id="thinking-timeline" class="thinking-timeline"></div>
+            </div>
+
+            <div class="inspector-block">
+                <div class="inspector-title">
+                    <h2 data-i18n="workspace_files">My Computer / Workspace</h2>
+                </div>
+                <div class="refresh-info">
+                    <span id="refresh-countdown" data-i18n="refresh_countdown">Refresh in 5s</span>
+                    <button id="refresh-files" class="btn" data-i18n="refresh">Refresh</button>
+                </div>
+                <div id="workspace-files" class="workspace-files"></div>
+            </div>
+
+            <div id="file-viewer" class="file-viewer">
+                <div class="file-viewer-header">
+                    <h3 id="file-name" data-i18n="file_name">File Name</h3>
+                    <button id="close-file-viewer" class="btn-close" data-i18n="close">×</button>
+                </div>
+                <pre id="file-content" class="file-content"></pre>
+            </div>
+        </aside>
+    </div>
+
+    <script src="/static/manus_modal_overlay.js"></script>
+    <script type="module" src="/static/connected_interface.js"></script>
+</body>
+</html>

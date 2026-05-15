@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hermes Viral Use Case Setup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="/static/brand/hermes-logo.png">
+<style>
+:root {
+--bg: #000000;
+--surface: #0a0a0a;
+--surface-2: #111111;
+--line: #1f1f1f;
+--line-2: #2a2a2a;
+--text: #ffffff;
+--muted: #9ca3af;
+--soft: #d1d5db;
+--ok: #f97316;
+--warn: #fb923c;
+--error: #fdba74;
+--shadow: 0 12px 40px rgba(0,0,0,0.6);
+--font: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+--mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+--claude-orange: #f97316;
+--claude-orange-hover: #ea580c;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { min-height: 100%; }
+body {
+font-family: var(--font);
+color: var(--text);
+background: radial-gradient(circle at top, rgba(249,115,22,0.08), transparent 35%), var(--bg);
+overflow-x: hidden;
+padding: 20px;
+}
+
+.shell {
+max-width: 1200px;
+margin: 0 auto;
+}
+
+header {
+border: 1px solid var(--line);
+background: rgba(10,10,10,0.65);
+border-radius: 18px;
+padding: 24px 28px;
+backdrop-filter: blur(8px);
+box-shadow: var(--shadow);
+margin-bottom: 24px;
+display: flex;
+align-items: center;
+gap: 20px;
+}
+
+.back-btn {
+background: transparent;
+border: 1px solid var(--line-2);
+color: var(--soft);
+padding: 10px 16px;
+border-radius: 10px;
+cursor: pointer;
+font-size: 0.9rem;
+transition: all 0.2s;
+text-decoration: none;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+}
+
+.back-btn:hover {
+border-color: var(--claude-orange);
+color: var(--claude-orange);
+}
+
+h1 {
+font-size: 1.8rem;
+font-weight: 800;
+letter-spacing: 0.02em;
+}
+
+.subtitle {
+color: var(--muted);
+font-size: 0.95rem;
+margin-top: 4px;
+}
+
+.section {
+border: 1px solid var(--line);
+background: rgba(16,16,16,0.88);
+border-radius: 14px;
+padding: 24px;
+margin-bottom: 20px;
+}
+
+.section h2 {
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 0.14em;
+color: var(--muted);
+margin-bottom: 16px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+
+.section h2::before {
+content: '';
+width: 3px;
+height: 20px;
+background: var(--claude-orange);
+border-radius: 2px;
+}
+
+.grid {
+display: grid;
+grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+gap: 12px;
+}
+
+.card {
+border: 1px solid var(--line);
+background: linear-gradient(145deg, rgba(16,16,16,0.95) 0%, rgba(10,10,10,0.98) 100%);
+border-radius: 12px;
+padding: 18px;
+transition: all 0.2s ease;
+cursor: pointer;
+position: relative;
+overflow: hidden;
+}
+
+.card::before {
+content: '';
+position: absolute;
+top: 0;
+left: 0;
+right: 0;
+height: 2px;
+background: linear-gradient(90deg, transparent 0%, var(--claude-orange) 50%, transparent 100%);
+opacity: 0;
+transition: opacity 0.2s ease;
+}
+
+.card:hover {
+border-color: var(--claude-orange);
+transform: translateY(-2px);
+box-shadow: 0 8px 30px rgba(249, 115, 22, 0.15);
+}
+
+.card:hover::before {
+opacity: 1;
+}
+
+.card.selected {
+border-color: var(--claude-orange);
+background: rgba(249, 115, 22, 0.08);
+}
+
+.card h3 {
+font-size: 0.95rem;
+margin-bottom: 8px;
+color: var(--text);
+}
+
+.card p {
+font-size: 0.82rem;
+color: var(--muted);
+line-height: 1.5;
+}
+
+.card .meta {
+margin-top: 12px;
+display: flex;
+gap: 10px;
+flex-wrap: wrap;
+}
+
+.tag {
+font-size: 0.65rem;
+padding: 3px 8px;
+border-radius: 6px;
+background: var(--surface-2);
+border: 1px solid var(--line-2);
+color: var(--soft);
+}
+
+.form-group {
+margin-bottom: 16px;
+}
+
+.form-group label {
+display: block;
+font-size: 0.75rem;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+color: var(--muted);
+margin-bottom: 8px;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+width: 100%;
+background: var(--surface-2);
+border: 1px solid var(--line);
+border-radius: 10px;
+padding: 12px 14px;
+color: var(--text);
+font-size: 0.95rem;
+font-family: var(--font);
+transition: all 0.2s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+outline: none;
+border-color: var(--claude-orange);
+box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.1);
+}
+
+.form-group textarea {
+min-height: 100px;
+resize: vertical;
+}
+
+.btn {
+background: var(--claude-orange);
+color: #000;
+border: none;
+padding: 14px 28px;
+border-radius: 12px;
+font-size: 0.95rem;
+font-weight: 600;
+cursor: pointer;
+transition: all 0.2s;
+display: inline-flex;
+align-items: center;
+gap: 10px;
+}
+
+.btn:hover {
+background: var(--claude-orange-hover);
+transform: translateY(-1px);
+box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+}
+
+.btn:disabled {
+opacity: 0.5;
+cursor: not-allowed;
+transform: none;
+}
+
+.btn-secondary {
+background: transparent;
+border: 1px solid var(--line-2);
+color: var(--soft);
+}
+
+.btn-secondary:hover {
+border-color: var(--muted);
+color: var(--text);
+}
+
+.scan-results {
+margin-top: 16px;
+}
+
+.result-item {
+padding: 14px;
+border: 1px solid var(--line);
+border-radius: 10px;
+margin-bottom: 10px;
+background: var(--surface-2);
+display: flex;
+align-items: center;
+gap: 12px;
+}
+
+.result-item input[type="checkbox"] {
+width: 18px;
+height: 18px;
+accent-color: var(--claude-orange);
+}
+
+.result-item.selected {
+border-color: var(--claude-orange);
+background: rgba(249, 115, 22, 0.05);
+}
+
+.loading {
+display: flex;
+align-items: center;
+gap: 12px;
+color: var(--muted);
+}
+
+.spinner {
+width: 20px;
+height: 20px;
+border: 2px solid var(--line-2);
+border-top-color: var(--claude-orange);
+border-radius: 50%;
+animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+to { transform: rotate(360deg); }
+}
+
+.modal {
+display: none;
+position: fixed;
+inset: 0;
+background: rgba(0,0,0,0.8);
+z-index: 99;
+align-items: center;
+justify-content: center;
+padding: 20px;
+}
+
+.modal.show { display: flex; }
+
+.modal-box {
+background: var(--surface);
+border: 1px solid var(--line);
+border-radius: 16px;
+padding: 28px;
+max-width: 500px;
+width: 100%;
+}
+
+.modal-box h3 {
+font-size: 1.2rem;
+margin-bottom: 12px;
+}
+
+.modal-box p {
+color: var(--muted);
+margin-bottom: 20px;
+line-height: 1.5;
+}
+
+.modal-actions {
+display: flex;
+gap: 12px;
+justify-content: flex-end;
+}
+
+.progress-bar {
+height: 4px;
+background: var(--line-2);
+border-radius: 2px;
+overflow: hidden;
+margin-top: 16px;
+}
+
+.progress-bar-fill {
+height: 100%;
+background: var(--claude-orange);
+width: 0%;
+transition: width 0.3s ease;
+}
+</style>
+</head>
+<body>
+<div class="shell">
+<header>
+<a href="/dashboard" class="back-btn">← Back</a>
+<div>
+<h1>Hermes Viral Use Case Setup</h1>
+<p class="subtitle">Scan and apply viral YouTube strategies to your agent</p>
+</div>
+</header>
+
+<section class="section">
+<h2>Step 1: Scan Use Cases</h2>
+<div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
+<button class="btn" onclick="scanUseCases()" id="scanBtn">
+<span class="btn-icon">🔍</span>
+<span id="scanBtnText">Scan Use Cases</span>
+</button>
+<button class="btn btn-secondary" onclick="loadPresets()">Load Presets</button>
+</div>
+<div id="scanResults" class="scan-results"></div>
+</section>
+
+<section class="section">
+<h2>Step 2: Configure Profile</h2>
+<div class="form-group">
+<label for="channelName">Channel Name</label>
+<input type="text" id="channelName" placeholder="e.g., Lux Viral Labs" value="Lux Viral Labs">
+</div>
+<div class="form-group">
+<label for="niche">Niche / Topic</label>
+<input type="text" id="niche" placeholder="e.g., AI automation and creator workflows" value="AI automation and creator workflows">
+</div>
+<div class="form-group">
+<label for="voice">Voice / Tone</label>
+<input type="text" id="voice" placeholder="e.g., clear, tactical, high-energy" value="clear, tactical, high-energy">
+</div>
+<div class="form-group">
+<label for="cta">Call to Action</label>
+<input type="text" id="cta" placeholder="e.g., Subscribe for practical AI growth systems" value="Subscribe for practical AI growth systems">
+</div>
+<div class="form-group">
+<label for="offer">Offer / Funnel</label>
+<input type="text" id="offer" placeholder="e.g., newsletter + consulting funnel" value="newsletter + consulting funnel">
+</div>
+</section>
+
+<section class="section">
+<h2>Step 3: Apply Configuration</h2>
+<div style="display: flex; gap: 12px; align-items: center;">
+<button class="btn" onclick="applyConfiguration()" id="applyBtn">
+<span>🚀 Apply Configuration</span>
+</button>
+<button class="btn btn-secondary" onclick="autoApplyCron()" id="cronBtn">
+<span>⏰ Setup Auto-Apply (Cron)</span>
+</button>
+</div>
+<div class="progress-bar">
+<div class="progress-bar-fill" id="progressFill"></div>
+</div>
+<div id="applyResults" style="margin-top: 16px;"></div>
+</section>
+</div>
+
+<div class="modal" id="modal">
+<div class="modal-box">
+<h3 id="modal-title">Status</h3>
+<p id="modal-desc"></p>
+<div class="modal-actions">
+<button class="btn btn-secondary" onclick="closeModal()">Close</button>
+<button class="btn" onclick="confirmAction()" id="modal-confirm-btn">Confirm</button>
+</div>
+</div>
+</div>
+
+<script>
+let selectedPreset = null;
+let scanData = null;
+
+async function scanUseCases() {
+const btn = document.getElementById('scanBtn');
+const btnText = document.getElementById('scanBtnText');
+const resultsDiv = document.getElementById('scanResults');
+
+btn.disabled = true;
+btnText.innerHTML = '<div class="spinner"></div> Scanning...';
+resultsDiv.innerHTML = '<div class="loading"><div class="spinner"></div> Scanning Hermes use cases...</div>';
+
+try {
+const response = await fetch('/api/hermes/use-cases/scan?limit=60');
+const data = await response.json();
+
+if (data.status !== 'ok') {
+throw new Error(data.message || 'Scan failed');
+}
+
+scanData = data;
+displayScanResults(data.stories || []);
+btnText.textContent = '✓ Scanned';
+} catch (e) {
+resultsDiv.innerHTML = `<div class="result-item" style="border-color: var(--error); color: var(--error);">Error: ${e.message}</div>`;
+btnText.textContent = 'Scan Failed';
+}
+
+btn.disabled = false;
+}
+
+function displayScanResults(stories) {
+const resultsDiv = document.getElementById('scanResults');
+
+if (stories.length === 0) {
+resultsDiv.innerHTML = '<div class="result-item">No use cases found. Try refreshing.</div>';
+return;
+}
+
+const html = stories.slice(0, 20).map((story, idx) => `
+<div class="result-item ${idx === 0 ? 'selected' : ''}" data-id="${story.preset_id || story.id || idx}">
+<input type="radio" name="preset" value="${story.preset_id || story.id || idx}" ${idx === 0 ? 'checked' : ''} onchange="selectPreset('${story.preset_id || story.id || idx}')">
+<div style="flex: 1;">
+<h3>${story.title || story.name || 'Unnamed Preset'}</h3>
+<p>${story.description || story.summary || 'No description available'}</p>
+<div class="meta">
+${story.category ? `<span class="tag">${story.category}</span>` : ''}
+${story.source ? `<span class="tag">${story.source}</span>` : ''}
+</div>
+</div>
+</div>
+`).join('');
+
+resultsDiv.innerHTML = html;
+selectedPreset = stories[0]?.preset_id || stories[0]?.id;
+}
+
+function selectPreset(id) {
+selectedPreset = id;
+document.querySelectorAll('.result-item').forEach(el => {
+el.classList.remove('selected');
+if (el.dataset.id === id) {
+el.classList.add('selected');
+}
+});
+}
+
+function loadPresets() {
+showModal('Load Presets', 'Loading preset configurations from Hermes OS...');
+// Implementation would load preset configurations
+}
+
+async function applyConfiguration() {
+const profile = {
+channel_name: document.getElementById('channelName').value,
+niche: document.getElementById('niche').value,
+voice: document.getElementById('voice').value,
+cta: document.getElementById('cta').value,
+offer: document.getElementById('offer').value
+};
+
+const applyBtn = document.getElementById('applyBtn');
+const progressFill = document.getElementById('progressFill');
+const applyResults = document.getElementById('applyResults');
+
+applyBtn.disabled = true;
+progressFill.style.width = '30%';
+applyResults.innerHTML = '<div class="loading"><div class="spinner"></div> Applying configuration...</div>';
+
+try {
+const response = await fetch('/api/hermes/use-cases/apply', {
+method: 'POST',
+headers: { 'Content-Type': 'application/json' },
+body: JSON.stringify({
+preset_id: selectedPreset || 'viral-youtube-flywheel',
+profile: profile,
+auto_apply_cron: false
+})
+});
+
+const data = await response.json();
+
+progressFill.style.width = '100%';
+
+if (data.status !== 'ok') {
+throw new Error(data.message || 'Apply failed');
+}
+
+applyResults.innerHTML = `
+<div class="result-item" style="border-color: var(--ok);">
+<div style="flex: 1;">
+<h3>✓ Configuration Applied</h3>
+<p>Preset: ${data.preset_id || selectedPreset}</p>
+<p>Path: ${data.applied_path || 'N/A'}</p>
+</div>
+</div>
+`;
+
+showModal('Success', `Viral use case configuration applied successfully!\n\nPreset: ${data.preset_id || selectedPreset}\nApplied to: ${data.applied_path || 'Hermes OS'}`);
+} catch (e) {
+applyResults.innerHTML = `<div class="result-item" style="border-color: var(--error); color: var(--error);">Error: ${e.message}</div>`;
+applyBtn.disabled = false;
+}
+
+progressFill.style.width = '0%';
+}
+
+function autoApplyCron() {
+showModal('Setup Auto-Apply Cron', 'This will create a cron job to automatically apply viral strategies on a schedule.\n\nRecommended: Daily at 9 AM');
+}
+
+function showModal(title, desc) {
+document.getElementById('modal-title').textContent = title;
+document.getElementById('modal-desc').textContent = desc;
+document.getElementById('modal').classList.add('show');
+}
+
+function closeModal() {
+document.getElementById('modal').classList.remove('show');
+}
+
+function confirmAction() {
+closeModal();
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+// Load initial data if needed
+});
+</script>
+</body>
+</html>

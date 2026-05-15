@@ -1,0 +1,46 @@
+#!/bin/bash
+set -e
+
+APP_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd ../../ && pwd)"
+RESOURCES="$APP_PATH/Contents/Resources"
+cd "$RESOURCES"
+
+show_notification() {
+    osascript -e "display notification \"$1\" with title \"Lux Automaton\""
+}
+
+if ! command -v python3 &> /dev/null; then
+    osascript -e 'display alert "Python 3 Required" message "Please install Python 3 from python.org"'
+    exit 1
+fi
+
+if ! command -v curl &> /dev/null; then
+    osascript -e 'display alert "curl Required" message "Please install curl and retry."'
+    exit 1
+fi
+
+if ! curl -s http://localhost:11434/api/tags > /dev/null 2>&1; then
+    if [ -d "/Applications/Ollama.app" ]; then
+        open -a "Ollama"
+        sleep 3
+    fi
+fi
+
+pip3 install flask flask-cors --quiet 2>/dev/null || true
+
+export PYTHONPATH="$RESOURCES:${PYTHONPATH:-}"
+python3 "$RESOURCES/hub.py" &
+HUB_PID=$!
+
+echo "Starting Lux Automaton services..."
+for i in {1..20}; do
+    if curl -s http://localhost:1337 > /dev/null 2>&1; then
+        break
+    fi
+    sleep 1
+done
+
+open "http://localhost:1337"
+show_notification "Lux Automaton is ready!"
+
+wait $HUB_PID
